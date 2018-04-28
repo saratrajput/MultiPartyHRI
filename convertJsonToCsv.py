@@ -37,4 +37,4 @@ for i in range(len(listToBeSplit)):
     df[listToBeSplit[i]+'X'], df[listToBeSplit[i]+'Y'], df[listToBeSplit[i]+'Z'] = zip(*df.pop(listToBeSplit[i]))
 
 # To save the dataframe as .csv file
-df.to_csv('rawKinectData.csv')
+df.to_csv('splitKinectData.csv')
