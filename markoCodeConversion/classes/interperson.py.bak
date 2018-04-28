@@ -1,17 +1,7 @@
 # global imports
 import sys
-
-# This module defines functions and classes which implement a flexible event 
-# logging system for applications and libraries. The key benefit of having the
-# logging API provided by a standard library module is that all Python modules can
-# participate in logging, so your application log can include your own messages
-# integrated with messages from third-party modules.
 import logging
 import numpy as np
-
-# This library allows accurate and cross platform timezone calculations using
-# Python 2.4 or higher. It also solves the issue of ambiguous times at the end of
-# daylight saving time.
 import pytz
 from datetime import datetime
 
@@ -30,7 +20,7 @@ class Interperson_analyzer:
         self.state_dict = common.dictify(interaction_fsm.states, inv=True)
         self.state_dict_out = common.dictify(interaction_fsm.states)
         parameters = ['state_prio', 'id', 'state']
-        self.state_param_dict = {k: v for (k, v) in zip(parameters, list(range(len(parameters))))}
+        self.state_param_dict = {k: v for (k, v) in zip(parameters, range(len(parameters)))}
 
         # initialize the global state
         self.state = np.asarray([[0] * 6]*len(parameters)).T
@@ -43,7 +33,7 @@ class Interperson_analyzer:
     def update_state(self, update):
 
         # updates and reorders the entries in the self.state based on the highest state priority
-        print('received ', update)
+        print 'received ', update
 
         # update the state
         for person_nr in range(6):
@@ -51,8 +41,8 @@ class Interperson_analyzer:
                 try:
                     self.state[person_nr, 0] = self.state_prio_dict[update['state']]
                 except KeyError:
-                    print('State to update does not correspond to Indriya - compatible states.' \
-                          ' Interperson processor ends execution. Ignore the error in case of testing.')
+                    print 'State to update does not correspond to Indriya - compatible states.' \
+                          ' Interperson processor ends execution. Ignore the error in case of testing.'
                     sys.exit()
 
                 # DEBUG
@@ -67,8 +57,8 @@ class Interperson_analyzer:
         self.state = self.state[self.state[:, 0].argsort()[::-1][:6]]
         self.state = self.state[self.state[:, 0].argsort()[::-1][:6]]
 
-        print('after update of ', update['id'])
-        print(self.state)
+        print 'after update of ', update['id']
+        print self.state
 
         # print '-updating_stateholder_state-'
 
@@ -128,7 +118,7 @@ class Interperson_analyzer:
         return params
 
     def print_state(self):
-        print(self.state)
+        print self.state
 
     # def get_tracked_ids_numbers(self):
     #     idx = np.where(self.state[:, 0] > 0)[0]

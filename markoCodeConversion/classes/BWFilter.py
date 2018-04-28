@@ -1,3 +1,7 @@
+# From Signal processing library, get butterworth filter
+# Butter: Butterworth digital and analog filter design
+# lfilter: Filter data along one-dimension with an IIR or FIR filter
+# filtfilt: Apply a digital filter forward and backward to a signal.
 from scipy.signal import butter, lfilter, filtfilt
 
 class BWFilter():
