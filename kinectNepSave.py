@@ -3,7 +3,7 @@ import json
     
 node = nep.node("kinect_human") # Create a new node
 #conf = node.conf_sub() # Select the configuration of the subscriber
-conf = node.conf_sub(network="direct", ip="192.168.11.30", port="7000")
+conf = node.conf_sub(network="direct", ip="192.168.11.43", port="9090")
 sub = node.new_sub("/kinect_human", conf) # Set the topic and the configuration of the subscriber
 
 data={}
