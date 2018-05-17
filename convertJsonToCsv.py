@@ -5,16 +5,18 @@ import pandas as pd # Python data analysis library
 from pandas import DataFrame # 2-D tabular data structure with labeled axes
 import json # light-weight data interchange format inspired by JavaScript
 
+from sys import argv
+script, inputFile, outputFile = argv
 # Set path to input json file
-data=r'/home/sp/multiPartyHRI/rawKinectData.txt'
+#data=r'/home/sp/multiPartyHRI/rawKinectData.txt'
 
 # open file and load it as json
-def js_r(data):
-    with open(data, encoding='utf-8') as f_in:
+def js_r(inputFile):
+    with open(inputFile, encoding='utf-8') as f_in:
         return(json.load(f_in))
 
 if __name__ == "__main__":
-    my_dic_data = js_r(data)
+    my_dic_data = js_r(inputFile)
 #    print("This is my dictionary", my_dic_data)
 
 keys = my_dic_data.keys()
@@ -37,4 +39,4 @@ for i in range(len(listToBeSplit)):
     df[listToBeSplit[i]+'X'], df[listToBeSplit[i]+'Y'], df[listToBeSplit[i]+'Z'] = zip(*df.pop(listToBeSplit[i]))
 
 # To save the dataframe as .csv file
-df.to_csv('splitKinectData.csv')
+df.to_csv(outputFile + '.csv')
