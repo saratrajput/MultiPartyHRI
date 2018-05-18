@@ -3,9 +3,9 @@ import time
 
 server = nep.server('127.0.0.1', 8010) #Create a new server instance
 
-########################################
-#from naoqi import ALProxy
-#tts = ALProxy("ALTextToSpeech", "192.168.11.46", 9559)
+############## Pepper ##################
+from naoqi import ALProxy
+tts = ALProxy("ALTextToSpeech", "192.168.11.21", 9559)
 ########################################
 names = ["Unknown"] * 2 
 while True:
@@ -16,7 +16,8 @@ while True:
 
     if names[1] != request:
         names[1] = request
-        print names[1]
+        #print names[1]
+        tts.say("Hello, %s" % names[1])
 
 #    tts.say("Hello, %s" % request)
     
