@@ -17,7 +17,9 @@ while True:
     if names[1] != request:
         names[1] = request
         #print names[1]
-        tts.say("Hello, %s" % names[1])
+        # Send speech command to Pepper whenever a new face is detected
+        # After '^' indicates the animation to be done
+        tts.say("Hello!, ^start(animations/Stand/Gestures/Hey_1)  %s" % names[1])
 
 #    tts.say("Hello, %s" % request)
     
