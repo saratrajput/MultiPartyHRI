@@ -1,7 +1,7 @@
 ########## NEP ########## 
-import nep
-import time
-client = nep.client('127.0.0.1', 8010) #Create a new server instance
+#import nep
+#import time
+#client = nep.client('127.0.0.1', 8010) #Create a new server instance
 #########################
 import face_recognition
 import cv2
@@ -144,10 +144,10 @@ while True:
 
 #    print("%s" % name) # Testing the variable name
     ########################################
-    msg = name # Message to send as request
-    client.send_info(msg)   # Send request
-    client.listen_info()
-    time.sleep(1) # Wait one second
+#    msg = name # Message to send as request
+#    client.send_info(msg)   # Send request
+#    client.listen_info()
+#    time.sleep(1) # Wait one second
     #print (client.listen_info()) # Wait for server response
     ########################################
     # Display the resulting image

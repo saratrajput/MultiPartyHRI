@@ -10,8 +10,8 @@ import numpy as np
 # OpenCV is *not* required to use the face_recognition library. It's only required if you want to run this
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
-# Get a reference to webcam #0 (the default one)
-url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MNSdvHQVpys_ypMrpcNXtCRCEnRhBw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
+# Get the url of the image address: Read the steps explained in README
+url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MJxmIeMx8LP5Fxk6y4XrUNJCHFphDA&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
 #video_capture = cv2.VideoCapture("http://1JFIEGBQEABQQ:gvlab2018@192.168.1.104/mjpeg.cgi?user=1JFIEGBQEABQQ&password=gvlab2018&channel=0&.mjpg")
 #video_capture = cv2.VideoCapture('rtsp://1JFIEGBQEABQQ:gvlab2018@192.168.1.104')
 #video_capture = cv2.VideoCapture('http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MNSdvHQVpys_ypMrpcNXtCRCEnRhBw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx')
