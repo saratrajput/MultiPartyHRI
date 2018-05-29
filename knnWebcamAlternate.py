@@ -1,11 +1,13 @@
 import face_recognition
 import cv2
+
 ################################################################################
 # For using IP web-camera 
 ################################################################################
 import numpy as np
 import urllib.request
 import time
+
 ################################################################################
 # For knn trained model
 ################################################################################
@@ -16,8 +18,9 @@ import pickle
 
 # Get the url of the image address: Read the steps explained in README
 url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MPuYbzOdQTBJrrAPJdM.8YxCDdRhAw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
+
 ################################################################################
-# Predict
+# Predict: Taken from face_recognition_knn.py
 ################################################################################
 def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):
     """
@@ -56,30 +59,32 @@ def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):
     # Predict classes and remove classifications that aren't within the threshold
     return [(pred, loc) if rec else ("unknown", loc) for pred, loc, rec in zip(knn_clf.predict(faces_encodings), X_face_locations, are_matches)]
 ################################################################################
+
 # Initialize some variables
 processThisFrame = True # To skip processing alternating frames
 
 while True:
     # Grab a single frame of video
-    imgResp=urllib.request.urlopen(url)
-    #time.sleep(2)
+    try:
+        imgResp=urllib.request.urlopen(url)
+    except:
+        print("No input image")
     imgNp = np.array(bytearray(imgResp.read()), dtype=np.uint8)
     frame = cv2.imdecode(imgNp, -1)
 
-    # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-    #rgb_frame = frame[:, :, ::-1] # Can show error if there is no input image
-    
     # Resize frame of video to 1/4 size for faster face recognition processing
-    small_frame = cv2.resize(frame, None, fx=0.25, fy=0.25)
+    if frame is not None: # To skip processing if there is an error or delay getting new image.
+        small_frame = cv2.resize(frame, None, fx=0.25, fy=0.25)
 
     # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-    rgb_small_frame = small_frame[:, :, ::-1]
+        rgb_small_frame = small_frame[:, :, ::-1]
     
     # Only process every other frame of video to save time
     if processThisFrame:
         matches = predict(rgb_small_frame, model_path="trained_knn_model.clf")
-
+    
     processThisFrame = not processThisFrame
+
     # Loop through each face in this frame of video
     for name, (top, right, bottom, left) in matches:
         # Draw a box around the face
@@ -96,6 +101,7 @@ while True:
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
 
 # Release handle to the webcam
 video_capture.release()
