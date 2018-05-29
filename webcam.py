@@ -12,45 +12,21 @@ import numpy as np
 
 # Get the url of the image address: Read the steps explained in README
 url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MJxmIeMx8LP5Fxk6y4XrUNJCHFphDA&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
-#video_capture = cv2.VideoCapture("http://1JFIEGBQEABQQ:gvlab2018@192.168.1.104/mjpeg.cgi?user=1JFIEGBQEABQQ&password=gvlab2018&channel=0&.mjpg")
-#video_capture = cv2.VideoCapture('rtsp://1JFIEGBQEABQQ:gvlab2018@192.168.1.104')
-#video_capture = cv2.VideoCapture('http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MNSdvHQVpys_ypMrpcNXtCRCEnRhBw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx')
-#while True:
-#    _, frame = video_capture.read()
-#    cv2.imshow('webcam', frame)
-#    k = cv2.waitKey(0) & 0xFF
-#    if k == 27:
-#        cap.release()
-#        break
-
-
-
-# Load a sample picture and learn how to recognize it.
-#obama_image = face_recognition.load_image_file("obama.jpg")
-#obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
-#
-## Load a second sample picture and learn how to recognize it.
-#biden_image = face_recognition.load_image_file("biden.jpg")
-#biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
 # Load my image and learn how to recognize it.
 my_image = face_recognition.load_image_file("./images/myPhoto.jpg")
 my_image_encoding = face_recognition.face_encodings(my_image)[0]
 
-# Load second image and learn how to recognize it.
-hamied_image = face_recognition.load_image_file("./images/enrique.jpg")
-hamied_image_encoding = face_recognition.face_encodings(hamied_image)[0]
+# Load Enrique's image and learn how to recognize it.
+enrique_image = face_recognition.load_image_file("./images/enrique.jpg")
+enrique_image_encoding = face_recognition.face_encodings(enrique_image)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
-#    obama_face_encoding,
-#    biden_face_encoding,
     my_image_encoding,
-    hamied_image_encoding
+    enrique_image_encoding
 ]
 known_face_names = [
-#    "Barack Obama",
-#    "Joe Biden",
     "Suraj",
     "Enrique"
 ]
@@ -61,13 +37,8 @@ while True:
     imgNp = np.array(bytearray(imgResp.read()), dtype=np.uint8)
     frame = cv2.imdecode(imgNp, -1)
 
-#    cv2.imshow('test', frame)
-#    if ord('q') == cv2.waitKey(10):
-#        exit(0)
-#    ret, frame = video_capture.read()
-
     # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-    rgb_frame = frame[:, :, ::-1]
+    rgb_frame = frame[:, :, ::-1] # Can show error if there is no input image
 
     # Find all the faces and face enqcodings in the frame of video
     face_locations = face_recognition.face_locations(rgb_frame)

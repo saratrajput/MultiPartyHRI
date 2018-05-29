@@ -162,7 +162,7 @@ while True:
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
-    # print("%s" % name) # Testing the variable name
+    
     ########################################
     msg = name # Message to send as request
     client.send_info(msg)   # Send request
