@@ -1,27 +1,22 @@
 import face_recognition
 import cv2
 
-################################################################################
-# For using IP web-camera 
-################################################################################
+#==================== For using IP web-camera ====================
 import numpy as np
 import urllib.request
 import time
+#===============================================================================
 
-################################################################################
-# For knn trained model
-################################################################################
+#==================== For knn trained model ====================
 import math
 from sklearn import neighbors
 import pickle
-################################################################################
+#===============================================================================
 
 # Get the url of the image address: Read the steps explained in README
 url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MPuYbzOdQTBJrrAPJdM.8YxCDdRhAw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
 
-################################################################################
-# Predict: Taken from face_recognition_knn.py
-################################################################################
+#==================== Predict: Taken from face_recognition_knn.py ====================
 def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):
     """
     Recognizes faces in given image using a trained KNN classifier
@@ -58,7 +53,7 @@ def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):
 
     # Predict classes and remove classifications that aren't within the threshold
     return [(pred, loc) if rec else ("unknown", loc) for pred, loc, rec in zip(knn_clf.predict(faces_encodings), X_face_locations, are_matches)]
-################################################################################
+#===============================================================================
 
 # Initialize some variables
 processThisFrame = 0 # To skip processing alternating frames
@@ -83,7 +78,8 @@ while True:
     if processThisFrame == 0:
         matches = predict(rgb_small_frame, model_path="trained_knn_model.clf")
         processThisFrame = 4
-    else:   processThisFrame = processThisFrame - 1 
+    else:   processThisFrame = processThisFrame - 1
+
     # Loop through each face in this frame of video
     for name, (top, right, bottom, left) in matches:
         # Draw a box around the face
@@ -93,8 +89,6 @@ while True:
         cv2.rectangle(small_frame, (left, bottom - 5), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(small_frame, name, (left + 6, bottom - 6), font, 0.4, (255, 255, 255), 1)
-
-#    else:   processThisFrame = processThisFrame - 1 
 
     # Display the resulting image
     cv2.imshow('Video', small_frame)

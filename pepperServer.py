@@ -3,7 +3,7 @@ import time
 
 server = nep.server('127.0.0.1', 8010) #Create a new server instance
 
-############## Pepper ##################
+#============================== Pepper ==============================
 from naoqi import ALProxy
 
 robotIp = "192.168.11.37"
@@ -15,12 +15,11 @@ normalSpeechProxy = ALProxy("ALTextToSpeech", robotIp, port)
 autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
 motionProxy = ALProxy("ALMotion", robotIp, port)
 behaviourProxy.stopAllBehaviors()
-########################################
+#===============================================================================
 names = ["Unknown"] * 2 
 while True:
     msg = {"message":"hello client"} # Message to send as response
     request = server.listen_info() # Wait for client request
-#    print request
     server.send_info(msg) # Send server response
 
     if names[1] != request:
@@ -32,7 +31,5 @@ while True:
         animatedSpeechProxy.say("Hey! ^run(animations/Think_1) %s" % names[1])
 #    tts.say("Hello, %s" % request)
     
-
-#tts.say("Hello, world!")
 
 

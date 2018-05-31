@@ -1,8 +1,8 @@
-########## NEP ########## 
+# ============================= NEP ==============================  
 #import nep
 #import time
 #client = nep.client('127.0.0.1', 8010) #Create a new server instance
-#########################
+#===============================================================================
 import face_recognition
 import cv2
 
@@ -16,14 +16,7 @@ import cv2
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
-## Load a sample picture and learn how to recognize it.
-#obama_image = face_recognition.load_image_file("obama.jpg")
-#obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
-
-## Load a second sample picture and learn how to recognize it.
-#biden_image = face_recognition.load_image_file("biden.jpg")
-#biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
-
+#============================== Put it in a loop ==============================
 # Load Suraj's image and learn how to recognize it.
 my_image = face_recognition.load_image_file("./images/myPhoto.jpg")
 my_image_encoding = face_recognition.face_encodings(my_image)[0]
@@ -71,11 +64,10 @@ lizSensei_image_encoding = face_recognition.face_encodings(lizSensei_image)[0]
 # Load Takamune's image and learn how to recognize it.
 takamune_image = face_recognition.load_image_file("./images/takamune.jpg")
 takamune_image_encoding = face_recognition.face_encodings(takamune_image)[0]
+#===============================================================================
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
-    #    obama_face_encoding,
-    #    biden_face_encoding,
     my_image_encoding,
     enrique_image_encoding,
     tomoya_image_encoding,
@@ -91,8 +83,6 @@ known_face_encodings = [
 
 ]
 known_face_names = [
-    #    "Barack Obama",
-    #    "Joe Biden",
     "Suraj",
     "Enrique",
     "Tomoya",
@@ -127,8 +117,6 @@ while True:
         # See if the face is a match for the known face(s)
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
-#        name = "Unknown" # Can't access out of for loop
-
         # If a match was found in known_face_encodings, just use the first one.
         if True in matches:
             first_match_index = matches.index(True)
@@ -142,14 +130,13 @@ while True:
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
-#    print("%s" % name) # Testing the variable name
-    ########################################
+#============================== NEP ============================== 
 #    msg = name # Message to send as request
 #    client.send_info(msg)   # Send request
 #    client.listen_info()
 #    time.sleep(1) # Wait one second
-    #print (client.listen_info()) # Wait for server response
-    ########################################
+#===============================================================================
+
     # Display the resulting image
     cv2.imshow('Video', frame)
 
