@@ -1,7 +1,7 @@
 from naoqi import ALProxy
 
 # Declare robot ip and port
-robotIp = "192.168.11.37"
+robotIp = "192.168.1.101"
 port = 9559
 
 behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
@@ -11,7 +11,7 @@ autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
 motionProxy = ALProxy("ALMotion", robotIp, port)
 
 # First stop all behaviours
-behaviourProxy.stopAllBehaviors()
+#behaviourProxy.stopAllBehaviors()
 
 # To say something animatedly
 #animatedSpeechProxy.say("Hey! ^run(animations/Think_1) you")
