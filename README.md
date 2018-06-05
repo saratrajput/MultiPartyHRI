@@ -1,8 +1,7 @@
 # MultiPartyHRI
 MasterThesis code
 
-################################################################################
-Using IP Webcamera with Face Recognition:
+====================Using IP Webcamera with Face Recognition:====================
 
 - Connect the IP Webcamera to ethernet cable of your network.
 - Install an app like "MIPC" on your android device.
@@ -21,3 +20,4 @@ Following steps can be done on android device but it's easier on the PC:
   wifi network. (Connect PC to wifi with an external wifi device.)
 - Go to the home section in the browser -> right click on the feed -> Copy image 
   address -> Paste in the url section of the script: webcam.py
+================================================================================
