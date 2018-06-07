@@ -1,7 +1,7 @@
 # ============================= NEP ==============================  
-#import nep
-#import time
-#client = nep.client('127.0.0.1', 8010) #Create a new server instance
+import nep
+import time
+client = nep.client('127.0.0.1', 8010) #Create a new server instance
 #===============================================================================
 import face_recognition
 import cv2
@@ -18,52 +18,84 @@ video_capture = cv2.VideoCapture(0)
 
 #============================== Put it in a loop ==============================
 # Load Suraj's image and learn how to recognize it.
-my_image = face_recognition.load_image_file("./images/myPhoto.jpg")
+my_image = face_recognition.load_image_file("./data/images/myPhoto.jpg")
 my_image_encoding = face_recognition.face_encodings(my_image)[0]
 
 # Load Enrique's image and learn how to recognize it.
-enrique_image = face_recognition.load_image_file("./images/enrique.jpg")
+enrique_image = face_recognition.load_image_file("./data/images/enrique.jpg")
 enrique_image_encoding = face_recognition.face_encodings(enrique_image)[0]
 
 # Load Tomoya's image and learn how to recognize it.
-tomoya_image = face_recognition.load_image_file("./images/tomoya.jpg")
+tomoya_image = face_recognition.load_image_file("./data/images/tomoya.jpg")
 tomoya_image_encoding = face_recognition.face_encodings(tomoya_image)[0]
 
 # Load Hamied's image and learn how to recognize it.
-hamied_image = face_recognition.load_image_file("./images/hamied.jpg")
+hamied_image = face_recognition.load_image_file("./data/images/hamied.jpg")
 hamied_image_encoding = face_recognition.face_encodings(hamied_image)[0]
 
 # Load Fawzi's image and learn how to recognize it.
-fawzi_image = face_recognition.load_image_file("./images/fawzi.jpg")
+fawzi_image = face_recognition.load_image_file("./data/images/fawzi.jpg")
 fawzi_image_encoding = face_recognition.face_encodings(fawzi_image)[0]
 
 # Load Misato's image and learn how to recognize it.
-misato_image = face_recognition.load_image_file("./images/misato.jpg")
+misato_image = face_recognition.load_image_file("./data/images/misato.jpg")
 misato_image_encoding = face_recognition.face_encodings(misato_image)[0]
 
 # Load Taka's image and learn how to recognize it.
-taka_image = face_recognition.load_image_file("./images/taka.jpg")
+taka_image = face_recognition.load_image_file("./data/images/taka.jpg")
 taka_image_encoding = face_recognition.face_encodings(taka_image)[0]
 
 # Load Raida's image and learn how to recognize it.
-raida_image = face_recognition.load_image_file("./images/raida.jpg")
+raida_image = face_recognition.load_image_file("./data/images/raida.jpg")
 raida_image_encoding = face_recognition.face_encodings(raida_image)[0]
 
 # Load Shohei's image and learn how to recognize it.
-shohei_image = face_recognition.load_image_file("./images/shohei.jpg")
+shohei_image = face_recognition.load_image_file("./data/images/shohei.jpg")
 shohei_image_encoding = face_recognition.face_encodings(shohei_image)[0]
 
 # Load Venture Sensei's image and learn how to recognize it.
-ventureSensei_image = face_recognition.load_image_file("./images/ventureSensei.jpg")
+ventureSensei_image = face_recognition.load_image_file("./data/images/ventureSensei.jpg")
 ventureSensei_image_encoding = face_recognition.face_encodings(ventureSensei_image)[0]
 
 # Load Liz Sensei's image and learn how to recognize it.
-lizSensei_image = face_recognition.load_image_file("./images/lizSensei.jpg")
+lizSensei_image = face_recognition.load_image_file("./data/images/lizSensei.jpg")
 lizSensei_image_encoding = face_recognition.face_encodings(lizSensei_image)[0]
 
 # Load Takamune's image and learn how to recognize it.
-takamune_image = face_recognition.load_image_file("./images/takamune.jpg")
+takamune_image = face_recognition.load_image_file("./data/images/takamune.jpg")
 takamune_image_encoding = face_recognition.face_encodings(takamune_image)[0]
+
+# Load akira's image and learn how to recognize it.
+akira_image = face_recognition.load_image_file("./data/images/akira.jpg")
+akira_image_encoding = face_recognition.face_encodings(akira_image)[0]
+
+# Load kazushi's image and learn how to recognize it.
+kazushi_image = face_recognition.load_image_file("./data/images/kazushi.jpg")
+kazushi_image_encoding = face_recognition.face_encodings(kazushi_image)[0]
+
+# Load kei's image and learn how to recognize it.
+kei_image = face_recognition.load_image_file("./data/images/kei.jpg")
+kei_image_encoding = face_recognition.face_encodings(kei_image)[0]
+
+# Load kodai's image and learn how to recognize it.
+kodai_image = face_recognition.load_image_file("./data/images/kodai.jpg")
+kodai_image_encoding = face_recognition.face_encodings(kodai_image)[0]
+
+# Load ren's image and learn how to recognize it.
+ren_image = face_recognition.load_image_file("./data/images/ren.jpg")
+ren_image_encoding = face_recognition.face_encodings(ren_image)[0]
+
+# Load seiji's image and learn how to recognize it.
+seiji_image = face_recognition.load_image_file("./data/images/seiji.jpg")
+seiji_image_encoding = face_recognition.face_encodings(seiji_image)[0]
+
+# Load takuya's image and learn how to recognize it.
+takuya_image = face_recognition.load_image_file("./data/images/takuya.jpg")
+takuya_image_encoding = face_recognition.face_encodings(takuya_image)[0]
+
+# Load tatsuki's image and learn how to recognize it.
+tatsuki_image = face_recognition.load_image_file("./data/images/tatsuki.jpg")
+tatsuki_image_encoding = face_recognition.face_encodings(tatsuki_image)[0]
 #===============================================================================
 
 # Create arrays of known face encodings and their names
@@ -79,7 +111,15 @@ known_face_encodings = [
     shohei_image_encoding,
     ventureSensei_image_encoding,
     lizSensei_image_encoding,
-    takamune_image_encoding
+    takamune_image_encoding,
+    akira_image_encoding,
+    kazushi_image_encoding,
+    kei_image_encoding,
+    kodai_image_encoding,
+    ren_image_encoding,
+    seiji_image_encoding,
+    takuya_image_encoding,
+    tatsuki_image_encoding
 
 ]
 known_face_names = [
@@ -94,7 +134,16 @@ known_face_names = [
     "Shohei",
     "Venture Sensei",
     "Liz Sensei",
-    "Takamune"
+    "Takamune",
+    "Akira",
+    "Kazushi",
+    "Kei",
+    "Kodai",
+    "Ren",
+    "Seiji",
+    "Takuya",
+    "Tatsuki"
+
 
     
 ]
@@ -131,10 +180,10 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
 #============================== NEP ============================== 
-#    msg = name # Message to send as request
-#    client.send_info(msg)   # Send request
-#    client.listen_info()
-#    time.sleep(1) # Wait one second
+    msg = name # Message to send as request
+    client.send_info(msg)   # Send request
+    client.listen_info()
+    time.sleep(1) # Wait one second
 #===============================================================================
 
     # Display the resulting image

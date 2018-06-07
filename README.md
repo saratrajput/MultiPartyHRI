@@ -21,3 +21,13 @@ Following steps can be done on android device but it's easier on the PC:
 - Go to the home section in the browser -> right click on the feed -> Copy image 
   address -> Paste in the url section of the script: webcam.py
 ================================================================================
+
+============================== Speech Recognizer ==============================
+------------------------- To Change Microphone ------------------------------
+import speech_recognition as sr
+for index, name in enumerate(sr.Microphone.list_microphone_names()):
+    print("Microphone with name \"{1}\" found for `Microphone(device_index={0})`".format(index, name))
+
+- You get some output along with device_indices.
+- To use a specific microphone, change Microphone to Microphone(device_index=<number>)
+--------------------------------------------------------------------------------

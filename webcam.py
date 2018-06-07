@@ -13,6 +13,19 @@ import numpy as np
 # Get the url of the image address: Read the steps explained in README
 url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MJxmIeMx8LP5Fxk6y4XrUNJCHFphDA&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
 
+#===============================================================================
+# To Do: Create a for loop to create the variables (Bad programming practice)
+#imagePath = ".data/images/"
+#labMembersList = [ 'suraj', 'enrique']
+#
+## Create arrays of known face encodings and their names
+#known_face_encodings = [];
+#
+#for name in labMembersList:
+#    name + "_image"  = face_recognition.load_image_file(imagePath + name + ".jpg")
+#    name + "_image_encoding" = face_recognition.face_encodings(name + "_image")[0]
+#===============================================================================
+
 # Load my image and learn how to recognize it.
 my_image = face_recognition.load_image_file("./images/myPhoto.jpg")
 my_image_encoding = face_recognition.face_encodings(my_image)[0]
