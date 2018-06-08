@@ -1,3 +1,8 @@
+# ============================= NEP ==============================  
+import nep
+import time
+client = nep.client('127.0.0.1', 8010) #Create a new server instance
+#===============================================================================
 import face_recognition
 import cv2
 
@@ -89,6 +94,13 @@ while True:
         cv2.rectangle(small_frame, (left, bottom - 5), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(small_frame, name, (left + 6, bottom - 6), font, 0.4, (255, 255, 255), 1)
+
+#============================== NEP ============================== 
+    msg = name # Message to send as request
+    client.send_info(msg)   # Send request
+    client.listen_info()
+    time.sleep(1) # Wait one second
+#===============================================================================
 
     # Display the resulting image
     cv2.imshow('Video', small_frame)
