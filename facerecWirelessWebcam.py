@@ -20,7 +20,7 @@ import time
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get the url of the image address: Read the steps explained in README
-url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MOSU9zPfqXlrjakwY.ckomtCD6JhAw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
+url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MHrJ9jBgas3exehAKCW_4PVCE4lhBg&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
 
 #===============================================================================
 # To Do: Create a for loop to create the variables (Bad programming practice)
@@ -114,6 +114,10 @@ takuya_image_encoding = face_recognition.face_encodings(takuya_image)[0]
 # Load tatsuki's image and learn how to recognize it.
 tatsuki_image = face_recognition.load_image_file("./data/images/tatsuki.jpg")
 tatsuki_image_encoding = face_recognition.face_encodings(tatsuki_image)[0]
+
+# Load tatsuki's image and learn how to recognize it.
+christopher_image = face_recognition.load_image_file("./data/images/christopher.jpg")
+christopher_image_encoding = face_recognition.face_encodings(christopher_image)[0]
 #===============================================================================
 
 # Create arrays of known face encodings and their names
@@ -137,7 +141,8 @@ known_face_encodings = [
     ren_image_encoding,
     seiji_image_encoding,
     takuya_image_encoding,
-    tatsuki_image_encoding
+    tatsuki_image_encoding,
+    christopher_image_encoding
 
 ]
 known_face_names = [
@@ -160,7 +165,8 @@ known_face_names = [
     "Ren",
     "Seiji",
     "Takuya",
-    "Tatsuki"
+    "Tatsuki",
+    "Christopher"
 
 
     
