@@ -6,7 +6,7 @@ server = nep.server('127.0.0.1', 8010) #Create a new server instance
 #============================== Pepper ==============================
 from naoqi import ALProxy
 
-robotIp = "192.168.0.108"
+robotIp = "192.168.1.105"
 port = 9559
 
 behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
