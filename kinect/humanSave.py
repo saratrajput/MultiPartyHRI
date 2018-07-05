@@ -4,7 +4,7 @@ import json
 # Adding date and time to filename
 import sys
 import datetime
-date_string = datetime.datetime.now().strftime("%m-%d-%H-%M")
+date_string = datetime.datetime.now().strftime("%d-%m-%H-%M")
 
 node = nep.node("kinect_human") # Create a new node
 conf = node.conf_sub() # Select the configuration of the subscriber

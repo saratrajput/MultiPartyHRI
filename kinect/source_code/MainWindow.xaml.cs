@@ -40,36 +40,32 @@ namespace Microsoft.Samples.Kinect.FaceBasics
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        
+        
 
-
-
-        //public class Sound
-        //{
-        //    public float beam = 0; //(6 - Priority No. in S.M.Anzalone, 2015) TODO
-        //    public float angle = 0; //(7 - Priority No. in S.M.Anzalone, 2015) 
-        //    public float confidence = 0; //(17 - Priority No. in S.M.Anzalone, 2015) 
-        //}
+        public class Sound
+        {
+            public float beam = 0; //(6) todo
+            public float angle = 0; //(7) 
+            public float confidence = 0; //(17) 
+        }
 
 
         public class Human
         {
-            
-
 
             // Other relevant features
-            public double shoulder_rot = 0;  //radians (1 - Priority No. in S.M.Anzalone, 2015)
-            public double hip_rot = 0; //radians  (10 - Priority No. in S.M.Anzalone, 2015) 
-            
-            // Right now it is equal to SpineMid
-            public float[] pedes_pos = { 0, 0, 0 }; //pedestrian position (3,21-Priority No. in S.M.Anzalone, 2015)
-            // TODO in python
-            //public float[] pedes_vel = { 0, 0, 0 }; // pedestrian veloccity (2- in this moment is equal to SpineMid)
+            public double shoulder_rot = 0;  //radians (1)
+            public double hip_rot = 0; //radians  (10) 
+
+            public float[] pedes_pos = { 0, 0, 0 }; //pedestrian position (3,21), in this moment is equal to SpineMid
+            //public float[] pedes_vel = { 0, 0, 0 }; // pedestrian veloccity (2) todo in python
 
             // Body variables (Marko thesis)
             public float[] ShoulderLeft = { 0, 0, 0 };
             public float[] ShoulderRight = { 0, 0, 0 };
             public float[] SpineBase = { 0, 0, 0 };
-            public float[] SpineMid = { 0, 0, 0 }; //(8,9 - Priority No. in S.M.Anzalone, 2015)
+            public float[] SpineMid = { 0, 0, 0 }; //(8,9)
             public float[] SpineShoulder = { 0, 0, 0 };
             public float[] WristLeft = { 0, 0, 0 };
             public float[] WristRight = { 0, 0, 0 };
@@ -80,8 +76,7 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             public float[] Neck = { 0, 0, 0 };
 
             //This variable represent the face position
-            // In pepper this is in pixels
-            public float[] Head = { 0, 0, 0 }; //(5-Priority No. in S.M.Anzalone, 2015) 
+            public float[] Head = { 0, 0, 0 }; //(5) but in the pepper is in pixels
 
             // Face rotation definition: pitch, yaw, roll
             public int face_yaw = 0;
@@ -97,13 +92,10 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             public string face_mouthmoved = "ukn";
             public string face_lookingaway = "ukn";
 
-            public double face_size = 0; //(4-Priority No. in S.M.Anzalone, 2015) //TODO
+            //public double face_size = 0; //(4) //TODO //Suraj: Removed face_size
             public int index = 0;
 
-            // Sound features to be sent along with human data
-            public float beam = 0; //(6-Priority No. in S.M.Anzalone, 2015) todo
-            public float angle = 0; //(7-Priority No. in S.M.Anzalone, 2015) 
-            public float confidence = 0; //(17-Priority No. in S.M.Anzalone, 2015) 
+            public string timeStamp = DateTime.Now.ToString("HH:mm:ss"); //Suraj: Added timeStamp
 
 
         }
@@ -112,8 +104,8 @@ namespace Microsoft.Samples.Kinect.FaceBasics
         // Topics and messages for comunication ******************************************************************************
         // Definition of the topics
 
-        //Sound haudio;
-        Human haudio;
+        Sound haudio;
+
         bool publish_data = false;
 
         Publisher pub_human;
@@ -555,6 +547,8 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             }
         }
 
+        //public string timeStamp { get; private set; }
+
         // Audio functions ************************************************************************************************
         /// <summary>
         /// Handles the audio frame data arriving from the sensor
@@ -841,6 +835,9 @@ namespace Microsoft.Samples.Kinect.FaceBasics
                 {
                     // update body data
                     bodyFrame.GetAndRefreshBodyData(this.bodies);
+
+                    //if (timeStamp != DateTime.Now.ToString("HH:mm:ss"))
+                    //{ timeStamp = DateTime.Now.ToString("HH:mm:ss"); }
 
                     using (DrawingContext dc = this.drawingGroup.Open())
                     {
@@ -1360,8 +1357,10 @@ namespace Microsoft.Samples.Kinect.FaceBasics
                         faceText += "LookingAway = " + face_state + "\n";
                     }
 
-                    human_state[faceIndex].face_size = 0;
-                  
+                    //human_state[faceIndex].face_size = 0; //Suraj: Removed face_size
+                    
+                    human_state[faceIndex].timeStamp = DateTime.Now.ToString("HH:mm:ss"); //Suraj: Added updated timeStamp
+
                 }
             }
 
@@ -1591,10 +1590,6 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             // Display new numerical values
             haudio.angle = beamAngleInDeg;
             haudio.confidence = beamAngleConfidence;
-
-            //human_state[audioindex].angle = beamAngleInDeg;
-            //human_state[audioindex].confidence = beamAngleConfidence;
-
             beamAngleText.Text =  beamAngleInDeg.ToString("0", CultureInfo.CurrentCulture);
             beamConfidenceText.Text =  beamAngleConfidence.ToString("0.00", CultureInfo.CurrentCulture);
         }
@@ -1672,11 +1667,8 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             human_state.Add(new Human());
             human_state.Add(new Human());
 
-            
+            haudio = new Sound();
 
-            //haudio = new Sound();
-            haudio = new Human();
-            
             // GENERAL KINECT DESCRIPTION ********************
 
             // one sensor is currently supported
@@ -1949,19 +1941,12 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             }
 
         }
-        // TO DO: Make the acquisition of ip address automatic
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Direct Publisher
-            //pub_human = new Publisher("/kinect_human", "kinect_human", "direct", "192.168.0.108", "9090");
-            //// Init publishers
-            //pub_sound = new Publisher("/kinect_sound", "kinect_sound", "direct", "192.168.0.108", "9091");
-
-            // Local Publisher
-            pub_human = new Publisher("/kinect_human", "kinect_human", "P2P", "localhost", "9000");
+            pub_human = new Publisher("/kinect_human", "kinect_human", "direct", "192.168.11.21", "9090");
             // Init publishers
-            pub_sound = new Publisher("/kinect_sound", "kinect_sound", "P2P", "localhost", "9000");
-
+            pub_sound = new Publisher("/kinect_sound", "kinect_sound", "direct", "192.168.11.21", "9091");
             publish_data = true;
         }
 
