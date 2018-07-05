@@ -33,7 +33,7 @@ for i in range(len(listToBeSplit)):
 #============================== Cleaning the data ==============================
 
 # Dropping face size since it's a column of zeros
-df.drop('face_size', axis=1, inplace=True)
+#df.drop('face_size', axis=1, inplace=True) # Removed from input Kinect stream
 
 # Mapping 'face_engaged': no = 0; yes = 1
 # With yes and no: face_looking away, face_engaged

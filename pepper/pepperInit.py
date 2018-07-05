@@ -1,7 +1,7 @@
 from naoqi import ALProxy
 
 # Declare robot ip and port
-robotIp = "192.168.1.105"
+robotIp = "192.168.11.59"
 port = 9559
 
 behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
@@ -11,7 +11,6 @@ autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
 motionProxy = ALProxy("ALMotion", robotIp, port)
 
 # First stop all behaviours
-#def stopBehaviour():
 #behaviourProxy.stopAllBehaviors()
 
 # To say something animatedly
@@ -31,3 +30,7 @@ motionProxy = ALProxy("ALMotion", robotIp, port)
 
 # To wakeup
 #motionProxy.wakeUp()
+
+# To make it (Pepper) stand completly still in order to scan a QR code, I had to do: 
+#ALAutonomousMoves.setExpressiveListeningEnabled(False) 
+#ALBasicAwareness.stopAwareness() 
