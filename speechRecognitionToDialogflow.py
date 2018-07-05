@@ -1,3 +1,5 @@
+import eventlet
+eventlet.monkey_patch()
 #==============================Facebook Messenger==============================
 from fbchat import Client
 from fbchat.models import *
@@ -8,15 +10,16 @@ import time
 import speech_recognition as sr
 import unicodedata
 #===============================================================================
-
+# Microsoft Bing Key
+bingKey = "5112e9b177784f0796586c31fd82d8c6"
 #==============================Facebook Messenger==============================
 myUsername = "pattarsuraj@gmail.com"
 myPassword = "TuIlvibgotVefM2"
-userClient = Client(myUsername, myPassword)
+userClient = Client(myUsername, myPassword) # Login to User's account
 
 pepperUsername = "gentianeventurelab@gmail.com"
 pepperPassword = "tokyo2009Noko"
-pepperClient = Client(pepperUsername, pepperPassword)
+pepperClient = Client(pepperUsername, pepperPassword) # Login to Robot's account
 #===============================================================================
 
 client = nep.client('127.0.0.1', 8010) #Create a new NEP client instance
@@ -47,7 +50,8 @@ class DialogFlowAgent(object):
 
         self.request.query = text
         response = self.request.getresponse().read()
-        speech = str(json.loads(response)['result']['fulfillment']['speech'])
+#        speech = str(json.loads(response)['result']['fulfillment']['speech'])
+        speech = u' '.join((json.loads(response)['result']['fulfillment']['speech'])).encode('utf-8').strip()
         return speech
 #===============================================================================
 
@@ -63,39 +67,47 @@ def main():
 	    recognizer.adjust_for_ambient_noise(source)  # listen for 1 second to calibrate the energy threshold for ambient noise levels
 	    print("Say something!")
 	    audio = recognizer.listen(source)
-#	with microphone as source: r.adjust_for_ambient_noise(source)
-#       recognizer.energy_threshold = 100;
+
+#       recognizer.energy_threshold = 100; # Manual setting for Energy Threshold
+
         print("Speech Recognizer: Set minimum energy threshold to {}".format(recognizer.energy_threshold))
 
         while True:
             print("Speech Recognizer: Say something!")
-            with microphone as source: audio = recognizer.listen(source)
-            print("Speech Recognizer: Got it! Now to recognize it...")
+            with eventlet.Timeout(10):
+                with microphone as source: audio = recognizer.listen(source)
+                print("Speech Recognizer: Got it! Now to recognize it...")
                     
             try:
                 # recognize speech using Google Speech Recognition
-                value = recognizer.recognize_google(audio)
+                print("Trying to Recognize ...")
+                with eventlet.Timeout(8):
+                    value = recognizer.recognize_bing(audio, key=bingKey)
+                    print("RECOGNIZED")
 
                 # Convert Speech Recognition to string for feeding Dialogflow
                 valueString = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+                print("VALUESTRING CONVERTED")
 
                 # we need some special handling here to correctly print unicode characters to standard output
                 if str is bytes:  # this version of Python uses bytes for strings (Python 2)
                     print(u"Speech Recognizer: You said {}".format(value).encode("utf-8"))
-                    print("Speech Recognizer: You said2: " + valueString)
 
                     # Send User's speech to Facebook
-                    userClient.send(Message(text=valueString), thread_id=pepperClient.uid, thread_type=ThreadType.USER)
+                    print("SENDING TO FACEBOOK")
+                    userClient.send(Message(text=valueString), thread_id=pepperClient.uid, thread_type=ThreadType.USER) 
 
                     # Send request to Dialogflow and get reply
-                    pepperSpeech = pepperAgent.handle(valueString)
+                    print("SENDING TO DIALOGFLOW")
+                    pepperSpeech = pepperAgent.handle(valueString) 
                     print("Dialogflow: " + pepperSpeech)
+
 #=================================== NEP ===================================
-#
-#                    msg = pepperSpeech # Message to send as request
+# Send Dialogflow reply to Pepper's Text to Speech
+                    msg = pepperSpeech # Message to send as request
 #                    client.send_info(msg)   # Send request
 #                    print("Message for the server: " +  msg)
-#                    pepperClient.send(Message(text=msg), thread_id=userClient.uid, thread_type=ThreadType.USER)
+                    pepperClient.send(Message(text=msg), thread_id=userClient.uid, thread_type=ThreadType.USER)
 #                    client.listen_info()
 #                    time.sleep(.01) # Wait one second
 #===============================================================================

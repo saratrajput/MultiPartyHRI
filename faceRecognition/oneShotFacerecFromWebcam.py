@@ -120,8 +120,8 @@ known_face_encodings = [
     seiji_image_encoding,
     takuya_image_encoding,
     tatsuki_image_encoding
-
 ]
+
 known_face_names = [
     "Suraj",
     "Enrique",
@@ -143,9 +143,6 @@ known_face_names = [
     "Seiji",
     "Takuya",
     "Tatsuki"
-
-
-    
 ]
 
 while True:

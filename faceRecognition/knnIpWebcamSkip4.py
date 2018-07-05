@@ -1,25 +1,17 @@
-# ============================= NEP ==============================  
-import nep
-import time
-client = nep.client('127.0.0.1', 8010) #Create a new server instance
-#===============================================================================
 import face_recognition
 import cv2
-
-#========================= For using IP web-camera =========================
+#==================== For using IP web-camera ====================
 import numpy as np
 import urllib.request
 import time
-#===============================================================================
-
-#========================= For knn trained model =========================
+#==================== For knn trained model ====================
 import math
 from sklearn import neighbors
 import pickle
 #===============================================================================
 
-# Get the url of the image address: Read the steps explained in README
-url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MH_HQKMWFd6IenPXWKqGKcBCH.BhDw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
+# Get the url of the image address of IP Webcam: Read the steps explained in README
+url = "http://192.168.1.104/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MPuYbzOdQTBJrrAPJdM.8YxCDdRhAw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
 
 #==================== Predict: Taken from face_recognition_knn.py ====================
 def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):
@@ -61,7 +53,7 @@ def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):
 #===============================================================================
 
 # Initialize some variables
-processThisFrame = True # To skip processing alternating frames
+processThisFrame = 0 # To skip processing alternating frames
 
 while True:
     # Grab a single frame of video
@@ -80,36 +72,27 @@ while True:
         rgb_small_frame = small_frame[:, :, ::-1]
     
     # Only process every other frame of video to save time
-        if processThisFrame:
-            matches = predict(rgb_small_frame, model_path="trained_knn_model.clf")
-	    
-        processThisFrame = not processThisFrame
-	    
-        name = "Unknown"
-	    # Loop through each face in this frame of video
-        for name, (top, right, bottom, left) in matches:
-            # Draw a box around the face
-            cv2.rectangle(small_frame, (left, top), (right, bottom), (0, 0, 255), 2)
-	
-	        # Draw a label with a name below the face
-            cv2.rectangle(small_frame, (left, bottom - 5), (right, bottom), (0, 0, 255), cv2.FILLED)
-            font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(small_frame, name, (left + 6, bottom - 6), font, 0.4, (255, 255, 255), 1)
+    if processThisFrame == 0:
+        matches = predict(rgb_small_frame, model_path="trained_knn_model.clf")
+        processThisFrame = 4
+    else:   processThisFrame = processThisFrame - 1
 
-#============================== NEP ============================== 
-        msg = name # Message to send as request
-        client.send_info(msg)   # Send request
-        client.listen_info()
-        time.sleep(1) # Wait one second
-#===============================================================================
+    # Loop through each face in this frame of video
+    for name, (top, right, bottom, left) in matches:
+        # Draw a box around the face
+        cv2.rectangle(small_frame, (left, top), (right, bottom), (0, 0, 255), 2)
+
+        # Draw a label with a name below the face
+        cv2.rectangle(small_frame, (left, bottom - 5), (right, bottom), (0, 0, 255), cv2.FILLED)
+        font = cv2.FONT_HERSHEY_DUPLEX
+        cv2.putText(small_frame, name, (left + 6, bottom - 6), font, 0.4, (255, 255, 255), 1)
 
     # Display the resulting image
-        cv2.imshow('Video', small_frame)
+    cv2.imshow('Video', small_frame)
 
     # Hit 'q' on the keyboard to quit!
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 # Release handle to the webcam
 video_capture.release()
