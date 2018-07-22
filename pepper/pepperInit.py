@@ -1,7 +1,7 @@
 from naoqi import ALProxy
 
 # Declare robot ip and port
-robotIp = "192.168.11.59"
+robotIp = "192.168.11.37"
 port = 9559
 
 behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)

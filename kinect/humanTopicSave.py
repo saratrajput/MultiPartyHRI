@@ -10,7 +10,7 @@ import sys
 import datetime
 import os
 
-saveDir = "/home/sp/multiPartyHRI/data/rawKinectData"
+saveDir = os.path.expanduser("~/multiPartyHRI/data/rawKinectData")
 
 date_string = datetime.datetime.now().strftime("%d-%m-%H-%M")
 
@@ -26,7 +26,7 @@ interrupted = False
 node = nep.node("kinect_human") # Create a new node
 # Select the configuration of the subscriber
 #conf = node.conf_sub() # Select the configuration of the subscriber
-conf = node.conf_sub(network = "direct", ip = "192.168.11.21", port = 9090)
+conf = node.conf_sub(network = "direct", ip = "192.168.11.19", port = 9090)
 sub = node.new_sub("/kinect_human", conf) # Set the topic and the configuration of the subscriber
 
 data={}

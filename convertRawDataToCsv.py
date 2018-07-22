@@ -5,11 +5,17 @@ import pandas as pd # Python data analysis library
 from pandas import DataFrame # 2-D tabular data structure with labeled axes
 import json # light-weight data interchange format inspired by JavaScript
 
-from sys import argv # For the list of command line arguments passed
-script, inputFile, outputFile = argv # inputFile with extension, outputFile without extension
+import os
 
-# Set path to input json file
-#inputFile=r'/home/sp/multiPartyHRI/rawKinectData.txt' 
+from sys import argv # For the list of command line arguments passed
+script, inputFile = argv # inputFile with extension, outputFile without extension
+
+outputFile = inputFile.strip('data' + '/rawKinectData' + '.txt')
+# Set path to input directory
+#inputDir = os.path.expanduser("~/multiPartyHRI/data/rawKinectData")
+
+# Set path to save directory
+saveDir = os.path.expanduser("~/multiPartyHRI/data/processedData/")
 
 # open file and load it as json
 def json_read(inputFile):
@@ -52,4 +58,4 @@ for i in range(len(unknownYesNoList)):
 #===============================================================================
 
 # To save the dataframe as .csv file
-df.to_csv(outputFile + '.csv')
+df.to_csv(saveDir + outputFile + '.csv')

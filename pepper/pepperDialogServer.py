@@ -9,7 +9,7 @@ server = nep.server('127.0.0.1', 8010) #Create a new server instance
 from naoqi import ALProxy
 import qi # For Tablet Display
 
-robotIp = "192.168.11.26"
+robotIp = "192.168.11.37"
 port = 9559
 
 #session = qi.Session()
@@ -21,7 +21,7 @@ port = 9559
 #animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
 normalSpeechProxy = ALProxy("ALTextToSpeech", robotIp, port)
 #autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
-#motionProxy = ALProxy("ALMotion", robotIp, port)
+motionProxy = ALProxy("ALMotion", robotIp, port)
 #behaviourProxy.stopAllBehaviors()
 #===============================================================================
 
@@ -33,6 +33,7 @@ while True:
     #print(type(request))
     try:
         normalSpeechProxy.say(request)
+       # motionProxy.setBreathEnabled('Body', True)
 #        tabletService.showInputTextDialog(request, "-", "-")
 #        tabletService.hideDialog()
     except:
