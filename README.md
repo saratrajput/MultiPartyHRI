@@ -1,6 +1,23 @@
 # MultiPartyHRI
 MasterThesis code
+============================== To Launch the Whole Setup ==============================
+Simply run the projectStartup.sh script.
 
+- It is a guake terminal script hence one needs to have guake terminal installed 
+to run the script. 
+	- To install guake, simply run: "sudo apt-get install guake" in your terminal.
+
+========================== Connect Pepper to Ethernet==============================
+- Connect Pepper to a known wifi network through its display screen.
+- Click on "i" icon on Pepper's tablet to display the MAC Address.
+- Note down the MAC Address for Ethernet cable. (Ethernet cable should be connected.)
+- Install arp-scan with: sudo apt-get install arp-scan
+- Make sure your PC is connected to the same ethernet network as Pepper.
+- Run the command 'ipconfig' on your terminal.
+- Get the name of your interface for ethernet. Eg: eth0, enp3s0, etc..
+- Run the command: sudo arp-scan --interface=enp3s0 --localnet | grep <MAC Address noted earlier>
+where enp3s0 is the interface name.
+- You got your IP address which can be used for connecting to Pepper as usual.
 =================================== Pepper Init ===================================
 This script contains all the basic proxies required to run Pepper.
 One can use it to put Pepper in Rest mode or Wake Up Mode.
@@ -50,3 +67,5 @@ for index, name in enumerate(sr.Microphone.list_microphone_names()):
 - You get some output along with device_indices.
 - To use a specific microphone, change Microphone to Microphone(device_index=<number>)
 --------------------------------------------------------------------------------
+Video Time = 18:33:00
+Kinect Data Time: 18:30:23

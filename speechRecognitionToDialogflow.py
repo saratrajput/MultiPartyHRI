@@ -1,3 +1,5 @@
+#!/home/sp/myEnvPy2/bin/python
+#==============================Break on Keystroke==============================
 import eventlet
 eventlet.monkey_patch()
 #==============================Facebook Messenger==============================
@@ -37,7 +39,7 @@ except ImportError:
     )
     import apiai
 
-CLIENT_ACCESS_TOKEN = '69b8fa6da6494f948c68bdf3242ec65d' # From DialogFlow Agent (V1)
+CLIENT_ACCESS_TOKEN = '346ddf0ddbcc4063859ba598a0e70d42' # From DialogFlow Agent (V1)
 
 class DialogFlowAgent(object):
     def __init__(self):
@@ -50,8 +52,8 @@ class DialogFlowAgent(object):
 
         self.request.query = text
         response = self.request.getresponse().read()
-#        speech = str(json.loads(response)['result']['fulfillment']['speech'])
-        speech = u' '.join((json.loads(response)['result']['fulfillment']['speech'])).encode('utf-8').strip()
+        speech = str(json.loads(response)['result']['fulfillment']['speech'])
+#        speech = u' '.join((json.loads(response)['result']['fulfillment']['speech'])).encode('utf-8').strip()
         return speech
 #===============================================================================
 
@@ -63,10 +65,10 @@ def main():
 
     try:
         print("Speech Recognizer: A moment of silence, please...")
-	with sr.Microphone() as source:
-	    recognizer.adjust_for_ambient_noise(source)  # listen for 1 second to calibrate the energy threshold for ambient noise levels
-	    print("Say something!")
-	    audio = recognizer.listen(source)
+        with sr.Microphone() as source:
+            recognizer.adjust_for_ambient_noise(source)  # listen for 1 second to calibrate the energy threshold for ambient noise levels
+            print("Say something!")
+            audio = recognizer.listen(source)
 
 #       recognizer.energy_threshold = 100; # Manual setting for Energy Threshold
 
@@ -74,16 +76,16 @@ def main():
 
         while True:
             print("Speech Recognizer: Say something!")
-            with eventlet.Timeout(10):
-                with microphone as source: audio = recognizer.listen(source)
-                print("Speech Recognizer: Got it! Now to recognize it...")
+#            with eventlet.Timeout(10):
+            with microphone as source: audio = recognizer.listen(source, timeout=3, phrase_time_limit=5)
+            print("Speech Recognizer: Got it! Now to recognize it...")
                     
             try:
                 # recognize speech using Google Speech Recognition
                 print("Trying to Recognize ...")
-                with eventlet.Timeout(8):
-                    value = recognizer.recognize_bing(audio, key=bingKey)
-                    print("RECOGNIZED")
+#                with eventlet.Timeout(8):
+                value = recognizer.recognize_bing(audio, key=bingKey)
+                print("RECOGNIZED")
 
                 # Convert Speech Recognition to string for feeding Dialogflow
                 valueString = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
@@ -104,11 +106,12 @@ def main():
 
 #=================================== NEP ===================================
 # Send Dialogflow reply to Pepper's Text to Speech
-                    msg = pepperSpeech # Message to send as request
-#                    client.send_info(msg)   # Send request
-#                    print("Message for the server: " +  msg)
-                    pepperClient.send(Message(text=msg), thread_id=userClient.uid, thread_type=ThreadType.USER)
-#                    client.listen_info()
+                    msg = str(pepperSpeech) # Message to send as request
+                    print (msg)
+                    client.send_info(msg)   # Send request
+                    print("Message for the server: " +  msg)
+                    pepperClient.send(Message(text=msg), thread_id=userClient.uid, thread_type=ThreadType.USER) # Pepper replies on Facebook
+                    client.listen_info()
 #                    time.sleep(.01) # Wait one second
 #===============================================================================
                 
