@@ -10,7 +10,7 @@ import sys
 import datetime
 import os
 
-saveDir = "/home/sp/multiPartyHRI/data/rawKinectData"
+saveDir = os.path.expanduser("~/multiPartyHRI/data/rawKinectData")
 
 date_string = datetime.datetime.now().strftime("%d-%m-%H-%M")
 
