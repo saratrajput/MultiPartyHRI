@@ -5,16 +5,25 @@ server = nep.server('127.0.0.1', 8011) #Create a new server instance
 
 #============================== Pepper ==============================
 from naoqi import ALProxy
+import os
 
-robotIp = "192.168.11.37"
-port = 9559
+# Declare robot ip and port
+robotIpPort = list()
 
-behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
-animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
+with open("/home/sp/multiPartyHRI/robotIpPort.txt", "r") as myRobotInfo:
+    for line in myRobotInfo.readlines():
+        robotIpPort.append(line.strip())
+
+robotIp = robotIpPort[0]
+port = int(robotIpPort[1])
+
+#===================================Proxies===================================
+#behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
+#animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
 normalSpeechProxy = ALProxy("ALTextToSpeech", robotIp, port)
-autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
-motionProxy = ALProxy("ALMotion", robotIp, port)
-behaviourProxy.stopAllBehaviors()
+#autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
+#motionProxy = ALProxy("ALMotion", robotIp, port)
+#behaviourProxy.stopAllBehaviors()
 #===============================================================================
 names = ["Unknown"] * 2 
 while True:

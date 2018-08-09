@@ -1,7 +1,6 @@
 #!/home/sp/myEnvPy2/bin/python
-#==============================Break on Keystroke==============================
-import eventlet
-eventlet.monkey_patch()
+# Import credentials for facebook login, bingKey, Dialogflow agent key
+import os 
 #==============================Facebook Messenger==============================
 from fbchat import Client
 from fbchat.models import *
@@ -11,19 +10,25 @@ import time
 #============================== Speech Recognition ==============================
 import speech_recognition as sr
 import unicodedata
-#===============================================================================
-# Microsoft Bing Key
-bingKey = "5112e9b177784f0796586c31fd82d8c6"
 #==============================Facebook Messenger==============================
-myUsername = "pattarsuraj@gmail.com"
-myPassword = "TuIlvibgotVefM2"
+# Get username, passwords and agent keys stored in a separate file
+credentials = list()
+
+with open("/home/sp/credentials.txt", "r") as myCredentialFile:
+    for line in myCredentialFile.readlines():
+        credentials.append(line.strip())
+
+myUsername = credentials[0]
+myPassword = credentials[1]
 userClient = Client(myUsername, myPassword) # Login to User's account
 
-pepperUsername = "gentianeventurelab@gmail.com"
-pepperPassword = "tokyo2009Noko"
+pepperUsername = credentials[2]
+pepperPassword = credentials[3]
 pepperClient = Client(pepperUsername, pepperPassword) # Login to Robot's account
 #===============================================================================
-
+# Microsoft Bing Key
+bingKey = credentials[4]
+#===============================================================================
 client = nep.client('127.0.0.1', 8010) #Create a new NEP client instance
 
 #=================================== DialogFlow ===================================
@@ -39,7 +44,7 @@ except ImportError:
     )
     import apiai
 
-CLIENT_ACCESS_TOKEN = '346ddf0ddbcc4063859ba598a0e70d42' # From DialogFlow Agent (V1)
+CLIENT_ACCESS_TOKEN = credentials[5] # From DialogFlow Agent (V1)
 
 class DialogFlowAgent(object):
     def __init__(self):
@@ -76,15 +81,17 @@ def main():
 
         while True:
             print("Speech Recognizer: Say something!")
-#            with eventlet.Timeout(10):
-            with microphone as source: audio = recognizer.listen(source, timeout=3, phrase_time_limit=5)
+            # Pepper replies on Facebook
+            pepperClient.send(Message(text="Say something!"), thread_id=userClient.uid, thread_type=ThreadType.USER)
+            with microphone as source: audio = recognizer.listen(source, timeout=5, phrase_time_limit=12)
             print("Speech Recognizer: Got it! Now to recognize it...")
+            # Pepper replies on Facebook
+            pepperClient.send(Message(text="Got it! Now to recognize it..."), thread_id=userClient.uid, thread_type=ThreadType.USER)
                     
             try:
                 # recognize speech using Google Speech Recognition
                 print("Trying to Recognize ...")
-#                with eventlet.Timeout(8):
-                value = recognizer.recognize_bing(audio, key=bingKey)
+                value = recognizer.recognize_google(audio)
                 print("RECOGNIZED")
 
                 # Convert Speech Recognition to string for feeding Dialogflow
@@ -119,8 +126,12 @@ def main():
                     print("You said {}".format(value))
             except sr.UnknownValueError:
                 print("Speech Recognizer: Oops! Didn't catch that")
+                # Pepper replies on Facebook
+                pepperClient.send(Message(text="Oops! Didn't catch that"), thread_id=userClient.uid, thread_type=ThreadType.USER)
             except sr.RequestError as e:
                 print("Speech Recognizer: Uh oh! Couldn't request results from Google Speech Recognition service; {0}".format(e))
+                # Pepper replies on Facebook
+                pepperClient.send(Message(text="Uh oh! Couldn't request results from Google Speech Recognition service"), thread_id=userClient.uid, thread_type=ThreadType.USER)
     except KeyboardInterrupt:
         pass
         

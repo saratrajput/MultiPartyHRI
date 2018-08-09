@@ -1,8 +1,14 @@
 from naoqi import ALProxy
-
+import os
 # Declare robot ip and port
-robotIp = "192.168.11.37"
-port = 9559
+robotIpPort = list()
+
+with open("/home/sp/multiPartyHRI/robotIpPort.txt", "r") as myRobotInfo:
+    for line in myRobotInfo.readlines():
+        robotIpPort.append(line.strip())
+
+robotIp = robotIpPort[0]
+port = int(robotIpPort[1])
 
 behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
 animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)

@@ -15,7 +15,7 @@ outputFile = inputFile.strip('data' + '/rawKinectData' + '.txt')
 #inputDir = os.path.expanduser("~/multiPartyHRI/data/rawKinectData")
 
 # Set path to save directory
-saveDir = os.path.expanduser("~/multiPartyHRI/data/processedData/")
+saveDir = os.path.expanduser("~/Dropbox/data/processedData/")
 
 # open file and load it as json
 def json_read(inputFile):

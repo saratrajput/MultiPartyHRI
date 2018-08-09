@@ -1,5 +1,0 @@
-'SpeakingConfidence' in: 
-- /home/sp/markoR/mainProgram/misc/keras_examples/kinect_data.py:59
-- /home/sp/markoR/mainProgram/classes/helpers/kinect_data_helper.py:144:
-- /home/sp/markoR/mainProgram/config/msg/human_engagement_pb2.py:336: 
-- /home/sp/markoR/mainProgram/manip.py:384:
