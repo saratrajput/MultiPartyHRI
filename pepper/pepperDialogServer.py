@@ -17,13 +17,13 @@ with open("/home/sp/multiPartyHRI/robotIpPort.txt", "r") as myRobotInfo:
 robotIp = robotIpPort[0]
 port = int(robotIpPort[1])
 #-----------------------------------Proxies-----------------------------------
-#behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
 #animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
 normalSpeechProxy = ALProxy("ALTextToSpeech", robotIp, port)
-#autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
 motionProxy = ALProxy("ALMotion", robotIp, port)
-#behaviourProxy.stopAllBehaviors()
 #===============================================================================
+
+normalSpeechProxy.setParameter("speed", 80)
+normalSpeechProxy.setParameter("pitchShift", 0.8)
 
 while True:
     msg = {"message":"hello client"} # Message to send as response
@@ -31,7 +31,7 @@ while True:
     
     try:
         normalSpeechProxy.say(request)
-       # motionProxy.setBreathEnabled('Body', True)
+        motionProxy.setBreathEnabled('Body', True)
     except:
         pass
     finally:
