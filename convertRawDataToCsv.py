@@ -10,12 +10,15 @@ import os
 from sys import argv # For the list of command line arguments passed
 script, inputFile = argv # inputFile with extension, outputFile without extension
 
-outputFile = inputFile.strip('data' + '/rawKinectData' + '.txt')
-# Set path to input directory
-#inputDir = os.path.expanduser("~/multiPartyHRI/data/rawKinectData")
 
 # Set path to save directory
 saveDir = os.path.expanduser("~/Dropbox/data/processedData/")
+
+outputFile = inputFile.strip(saveDir + 'data' + '/rawKinectData' + '.txt')
+
+# Set path to input directory
+#inputDir = os.path.expanduser("~/multiPartyHRI/data/rawKinectData")
+
 
 # open file and load it as json
 def json_read(inputFile):
@@ -58,4 +61,5 @@ for i in range(len(unknownYesNoList)):
 #===============================================================================
 
 # To save the dataframe as .csv file
+print(saveDir)
 df.to_csv(saveDir + outputFile + '.csv')

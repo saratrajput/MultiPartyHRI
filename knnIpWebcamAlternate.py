@@ -16,7 +16,7 @@ import pickle
 #===============================================================================
 
 # Get the url of the image address of IP Webcam: Read the steps explained in README
-url = "http://192.168.11.5/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MH8Hon3Ecn8jp8hK0WrmtzRCGOVhBw&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
+url = "http://192.168.11.5/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MB8z0spd1_cODpamaj.y6idCFqNhAg&dsess_sn=1jfiegbqeabqq&dtoken=p0_xxxxxxxxxx"
 
 #==================== Predict: Taken from face_recognition_knn.py ====================
 def predict(inputImage, knn_clf=None, model_path=None, distance_threshold=0.6):

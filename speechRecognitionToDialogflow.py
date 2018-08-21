@@ -1,4 +1,10 @@
 #!/home/sp/myEnvPy2/bin/python
+""" 
+This script performs speech recognition and forwards the output to Chatbot
+(Dialogflow)
+"""
+
+
 # Import credentials for facebook login, bingKey, Dialogflow agent key
 import os 
 #==============================Facebook Messenger==============================
@@ -57,9 +63,12 @@ class DialogFlowAgent(object):
 
         self.request.query = text
         response = self.request.getresponse().read()
-        speech = str(json.loads(response)['result']['fulfillment']['speech'])
+        try:
+            speech = str(json.loads(response)['result']['fulfillment']['speech'])
 #        speech = u' '.join((json.loads(response)['result']['fulfillment']['speech'])).encode('utf-8').strip()
-        return speech
+            return speech
+        except:
+            pepperClient.send(Message(text="Sorry! I was not able to read the response."), thread_id=userClient.uid, thread_type=ThreadType.USER)
 #===============================================================================
 
 recognizer = sr.Recognizer() # Speech Recognizer
@@ -70,12 +79,12 @@ def main():
 
     try:
         print("Speech Recognizer: A moment of silence, please...")
-        with sr.Microphone() as source:
-            recognizer.adjust_for_ambient_noise(source)  # listen for 1 second to calibrate the energy threshold for ambient noise levels
-            print("Say something!")
-            audio = recognizer.listen(source)
+#        with sr.Microphone() as source:
+#            recognizer.adjust_for_ambient_noise(source)  # listen for 1 second to calibrate the energy threshold for ambient noise levels
+#            print("Say something!")
+#            audio = recognizer.listen(source)
 
-#       recognizer.energy_threshold = 100; # Manual setting for Energy Threshold
+        recognizer.energy_threshold = 1000; # Manual setting for Energy Threshold
 
         print("Speech Recognizer: Set minimum energy threshold to {}".format(recognizer.energy_threshold))
 
@@ -83,7 +92,7 @@ def main():
             print("Speech Recognizer: Say something!")
             # Pepper replies on Facebook
             pepperClient.send(Message(text="Say something!"), thread_id=userClient.uid, thread_type=ThreadType.USER)
-            with microphone as source: audio = recognizer.listen(source, timeout=5, phrase_time_limit=12)
+            with microphone as source: audio = recognizer.listen(source, timeout=8, phrase_time_limit=15)
             print("Speech Recognizer: Got it! Now to recognize it...")
             # Pepper replies on Facebook
             pepperClient.send(Message(text="Got it! Now to recognize it..."), thread_id=userClient.uid, thread_type=ThreadType.USER)
@@ -119,7 +128,7 @@ def main():
                     print("Message for the server: " +  msg)
                     pepperClient.send(Message(text=msg), thread_id=userClient.uid, thread_type=ThreadType.USER) # Pepper replies on Facebook
                     client.listen_info()
-#                    time.sleep(.01) # Wait one second
+#                    time.sleep(.01) # Wait one second (for debugging) 
 #===============================================================================
                 
                 else:  # this version of Python uses unicode for strings (Python 3+)
