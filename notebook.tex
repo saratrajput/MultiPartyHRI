@@ -1,0 +1,989 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{autoEncoder}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \subsubsection{AE\_ts\_model}\label{ae_ts_model}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} AE\PYZus{}ts\PYZus{}model.py}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{Created on Tue Mar 22 10:43:29 2016}
+         \PY{l+s+sd}{@author: Rob Romijnders}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+         \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{contrib}\PY{n+nn}{.}\PY{n+nn}{rnn} \PY{k}{import} \PY{n}{LSTMCell}
+         
+         
+         \PY{k}{def} \PY{n+nf}{open\PYZus{}data}\PY{p}{(}\PY{n}{direc}\PY{p}{,} \PY{n}{ratio\PYZus{}train}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{dataset}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ECG5000}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Input:}
+         \PY{l+s+sd}{    direc: location of the UCR archive}
+         \PY{l+s+sd}{    ratio\PYZus{}train: ratio to split training and testset}
+         \PY{l+s+sd}{    dataset: name of the dataset in the UCR archive\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{datadir} \PY{o}{=} \PY{n}{direc} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{dataset} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{dataset}
+             \PY{n}{data\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{datadir} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}TRAIN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{data\PYZus{}test\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{datadir} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}TEST}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{data\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}test\PYZus{}val}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         
+             \PY{n}{N}\PY{p}{,} \PY{n}{D} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{shape}
+         
+             \PY{n}{ind\PYZus{}cut} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{ratio\PYZus{}train} \PY{o}{*} \PY{n}{N}\PY{p}{)}
+             \PY{n}{ind} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{permutation}\PY{p}{(}\PY{n}{N}\PY{p}{)}
+             \PY{k}{return} \PY{n}{data}\PY{p}{[}\PY{n}{ind}\PY{p}{[}\PY{p}{:}\PY{n}{ind\PYZus{}cut}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{data}\PY{p}{[}\PY{n}{ind}\PY{p}{[}\PY{n}{ind\PYZus{}cut}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{data}\PY{p}{[}\PY{n}{ind}\PY{p}{[}\PY{p}{:}\PY{n}{ind\PYZus{}cut}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{data}\PY{p}{[}\PY{n}{ind}\PY{p}{[}\PY{n}{ind\PYZus{}cut}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+         
+         
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}data}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{plot\PYZus{}row}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+             \PY{n}{counts} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}classes} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{)}
+             \PY{n}{f}\PY{p}{,} \PY{n}{axarr} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{plot\PYZus{}row}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{)}
+             \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{} Loops over classes, plot as columns}
+                 \PY{n}{c} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+                 \PY{n}{ind} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{y\PYZus{}train} \PY{o}{==} \PY{n}{c}\PY{p}{)}
+                 \PY{n}{ind\PYZus{}plot} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{ind}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{plot\PYZus{}row}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{plot\PYZus{}row}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{} Loops over rows}
+                     \PY{n}{axarr}\PY{p}{[}\PY{n}{n}\PY{p}{,} \PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{[}\PY{n}{ind\PYZus{}plot}\PY{p}{[}\PY{n}{n}\PY{p}{]}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{} Only shops axes for bottom row and left column}
+                     \PY{k}{if} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} \PY{n}{axarr}\PY{p}{[}\PY{n}{n}\PY{p}{,} \PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class }\PY{l+s+si}{\PYZpc{}.0f}\PY{l+s+s1}{ (}\PY{l+s+si}{\PYZpc{}.0f}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{c}\PY{p}{,} \PY{n}{counts}\PY{p}{[}\PY{n+nb}{float}\PY{p}{(}\PY{n}{c}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                     \PY{k}{if} \PY{o+ow}{not} \PY{n}{n} \PY{o}{==} \PY{n}{plot\PYZus{}row} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{:}
+                         \PY{n}{plt}\PY{o}{.}\PY{n}{setp}\PY{p}{(}\PY{p}{[}\PY{n}{axarr}\PY{p}{[}\PY{n}{n}\PY{p}{,} \PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{get\PYZus{}xticklabels}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{visible}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+                     \PY{k}{if} \PY{o+ow}{not} \PY{n}{c} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                         \PY{n}{plt}\PY{o}{.}\PY{n}{setp}\PY{p}{(}\PY{p}{[}\PY{n}{axarr}\PY{p}{[}\PY{n}{n}\PY{p}{,} \PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{get\PYZus{}yticklabels}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{visible}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+             \PY{n}{f}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{hspace}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}  \PY{c+c1}{\PYZsh{} No horizontal space between subplots}
+             \PY{n}{f}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{wspace}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}  \PY{c+c1}{\PYZsh{} No vertical space between subplots}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             \PY{k}{return}
+         
+         
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}z\PYZus{}run}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{,} \PY{n}{label}\PY{p}{,} \PY{p}{)}\PY{p}{:}
+             \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{TruncatedSVD}
+             \PY{n}{f1}\PY{p}{,} \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+         
+             \PY{n}{PCA\PYZus{}model} \PY{o}{=} \PY{n}{TruncatedSVD}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{)}
+             \PY{n}{z\PYZus{}run\PYZus{}reduced} \PY{o}{=} \PY{n}{PCA\PYZus{}model}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{)}
+             \PY{n}{ax1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{z\PYZus{}run\PYZus{}reduced}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{z\PYZus{}run\PYZus{}reduced}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{label}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{ax1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA on z\PYZus{}run}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+             \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{manifold} \PY{k}{import} \PY{n}{TSNE}
+             \PY{n}{tSNE\PYZus{}model} \PY{o}{=} \PY{n}{TSNE}\PY{p}{(}\PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{perplexity}\PY{o}{=}\PY{l+m+mi}{80}\PY{p}{,} \PY{n}{min\PYZus{}grad\PYZus{}norm}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}12}\PY{p}{,} \PY{n}{n\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{3000}\PY{p}{)}
+             \PY{n}{z\PYZus{}run\PYZus{}tsne} \PY{o}{=} \PY{n}{tSNE\PYZus{}model}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{)}
+             \PY{n}{ax1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{z\PYZus{}run\PYZus{}tsne}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{z\PYZus{}run\PYZus{}tsne}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{label}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{ax1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tSNE on z\PYZus{}run}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+             \PY{k}{return}
+         
+         
+         \PY{k}{class} \PY{n+nc}{Model}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{config}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Hyperparameters\PYZdq{}\PYZdq{}\PYZdq{}}
+                 \PY{n}{num\PYZus{}layers} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}layers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{hidden\PYZus{}size} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hidden\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{max\PYZus{}grad\PYZus{}norm} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}grad\PYZus{}norm}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{sl} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sl}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{crd} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{crd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{num\PYZus{}l} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{learning\PYZus{}rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sl} \PY{o}{=} \PY{n}{sl}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n}{batch\PYZus{}size}
+         
+                 \PY{c+c1}{\PYZsh{} Nodes for the input variables}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{x} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{shape}\PY{o}{=}\PY{p}{[}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{sl}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input\PYZus{}data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{x\PYZus{}exp} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{x}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{keep\PYZus{}prob} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+                 \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{variable\PYZus{}scope}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Encoder}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{scope}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} Th encoder cell, multi\PYZhy{}layered with dropout}
+                     \PY{n}{cell\PYZus{}enc} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{rnn}\PY{o}{.}\PY{n}{MultiRNNCell}\PY{p}{(}\PY{p}{[}\PY{n}{LSTMCell}\PY{p}{(}\PY{n}{hidden\PYZus{}size}\PY{p}{)} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}layers}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{cell\PYZus{}enc} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{rnn}\PY{o}{.}\PY{n}{DropoutWrapper}\PY{p}{(}\PY{n}{cell\PYZus{}enc}\PY{p}{,} \PY{n}{output\PYZus{}keep\PYZus{}prob}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{keep\PYZus{}prob}\PY{p}{)}
+         
+                     \PY{c+c1}{\PYZsh{} Initial state}
+                     \PY{n}{initial\PYZus{}state\PYZus{}enc} \PY{o}{=} \PY{n}{cell\PYZus{}enc}\PY{o}{.}\PY{n}{zero\PYZus{}state}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{)}
+         
+                 \PY{c+c1}{\PYZsh{} with tf.name\PYZus{}scope(\PYZdq{}Enc\PYZus{}2\PYZus{}lat\PYZdq{}) as scope:}
+                     \PY{c+c1}{\PYZsh{} layer for mean of z}
+                     \PY{n}{W\PYZus{}mu} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{get\PYZus{}variable}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W\PYZus{}mu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{n}{hidden\PYZus{}size}\PY{p}{,} \PY{n}{num\PYZus{}l}\PY{p}{]}\PY{p}{)}
+         
+                     \PY{n}{outputs\PYZus{}enc}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{rnn}\PY{o}{.}\PY{n}{static\PYZus{}rnn}\PY{p}{(}\PY{n}{cell\PYZus{}enc}\PY{p}{,}
+                                                               \PY{n}{inputs}\PY{o}{=}\PY{n}{tf}\PY{o}{.}\PY{n}{unstack}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{x\PYZus{}exp}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}
+                                                               \PY{n}{initial\PYZus{}state}\PY{o}{=}\PY{n}{initial\PYZus{}state\PYZus{}enc}\PY{p}{)}
+                     \PY{n}{cell\PYZus{}output} \PY{o}{=} \PY{n}{outputs\PYZus{}enc}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         
+                     \PY{n}{b\PYZus{}mu} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{get\PYZus{}variable}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZus{}mu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{n}{num\PYZus{}l}\PY{p}{]}\PY{p}{)}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{z\PYZus{}mu} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{xw\PYZus{}plus\PYZus{}b}\PY{p}{(}\PY{n}{cell\PYZus{}output}\PY{p}{,} \PY{n}{W\PYZus{}mu}\PY{p}{,} \PY{n}{b\PYZus{}mu}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z\PYZus{}mu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} mu, mean, of latent space}
+         
+                     \PY{c+c1}{\PYZsh{} Train the point in latent space to have zero\PYZhy{}mean and unit\PYZhy{}variance on batch basis}
+                     \PY{n}{lat\PYZus{}mean}\PY{p}{,} \PY{n}{lat\PYZus{}var} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{moments}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{z\PYZus{}mu}\PY{p}{,} \PY{n}{axes}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss\PYZus{}lat\PYZus{}batch} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{square}\PY{p}{(}\PY{n}{lat\PYZus{}mean}\PY{p}{)} \PY{o}{+} \PY{n}{lat\PYZus{}var} \PY{o}{\PYZhy{}} \PY{n}{tf}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{lat\PYZus{}var}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
+         
+                 \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{name\PYZus{}scope}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Lat\PYZus{}2\PYZus{}dec}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{scope}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} layer to generate initial state}
+                     \PY{n}{W\PYZus{}state} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{get\PYZus{}variable}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W\PYZus{}state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{n}{num\PYZus{}l}\PY{p}{,} \PY{n}{hidden\PYZus{}size}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{b\PYZus{}state} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{get\PYZus{}variable}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZus{}state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{n}{hidden\PYZus{}size}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{z\PYZus{}state} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{xw\PYZus{}plus\PYZus{}b}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{z\PYZus{}mu}\PY{p}{,} \PY{n}{W\PYZus{}state}\PY{p}{,} \PY{n}{b\PYZus{}state}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z\PYZus{}state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} mu, mean, of latent space}
+         
+                 \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{variable\PYZus{}scope}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decoder}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{scope}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} The decoder, also multi\PYZhy{}layered}
+                     \PY{n}{cell\PYZus{}dec} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{rnn}\PY{o}{.}\PY{n}{MultiRNNCell}\PY{p}{(}\PY{p}{[}\PY{n}{LSTMCell}\PY{p}{(}\PY{n}{hidden\PYZus{}size}\PY{p}{)} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}layers}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         
+                     \PY{c+c1}{\PYZsh{} Initial state}
+                     \PY{n}{initial\PYZus{}state\PYZus{}dec} \PY{o}{=} \PY{n+nb}{tuple}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{z\PYZus{}state}\PY{p}{,} \PY{n}{z\PYZus{}state}\PY{p}{)}\PY{p}{]} \PY{o}{*} \PY{n}{num\PYZus{}layers}\PY{p}{)}
+                     \PY{n}{dec\PYZus{}inputs} \PY{o}{=} \PY{p}{[}\PY{n}{tf}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{*} \PY{n}{sl}
+                     \PY{c+c1}{\PYZsh{} outputs\PYZus{}dec, \PYZus{} = tf.nn.seq2seq.rnn\PYZus{}decoder(dec\PYZus{}inputs, initial\PYZus{}state\PYZus{}dec, cell\PYZus{}dec)}
+                     \PY{n}{outputs\PYZus{}dec}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{rnn}\PY{o}{.}\PY{n}{static\PYZus{}rnn}\PY{p}{(}\PY{n}{cell\PYZus{}dec}\PY{p}{,}
+                                                                \PY{n}{inputs}\PY{o}{=}\PY{n}{dec\PYZus{}inputs}\PY{p}{,}
+                                                                \PY{n}{initial\PYZus{}state}\PY{o}{=}\PY{n}{initial\PYZus{}state\PYZus{}dec}\PY{p}{)}
+                 \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{name\PYZus{}scope}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Out\PYZus{}layer}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{scope}\PY{p}{:}
+                     \PY{n}{params\PYZus{}o} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{crd}  \PY{c+c1}{\PYZsh{} Number of coordinates + variances}
+                     \PY{n}{W\PYZus{}o} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{get\PYZus{}variable}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W\PYZus{}o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{n}{hidden\PYZus{}size}\PY{p}{,} \PY{n}{params\PYZus{}o}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{b\PYZus{}o} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{get\PYZus{}variable}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZus{}o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{n}{params\PYZus{}o}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{outputs} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{n}{outputs\PYZus{}dec}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}  \PY{c+c1}{\PYZsh{} tensor in [sl*batch\PYZus{}size,hidden\PYZus{}size]}
+                     \PY{n}{h\PYZus{}out} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{xw\PYZus{}plus\PYZus{}b}\PY{p}{(}\PY{n}{outputs}\PY{p}{,} \PY{n}{W\PYZus{}o}\PY{p}{,} \PY{n}{b\PYZus{}o}\PY{p}{)}
+                     \PY{n}{h\PYZus{}mu}\PY{p}{,} \PY{n}{h\PYZus{}sigma\PYZus{}log} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{unstack}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{h\PYZus{}out}\PY{p}{,} \PY{p}{[}\PY{n}{sl}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{params\PYZus{}o}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                     \PY{n}{h\PYZus{}sigma} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{h\PYZus{}sigma\PYZus{}log}\PY{p}{)}
+                     \PY{n}{dist} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{distributions}\PY{o}{.}\PY{n}{Normal}\PY{p}{(}\PY{n}{h\PYZus{}mu}\PY{p}{,} \PY{n}{h\PYZus{}sigma}\PY{p}{)}
+                     \PY{n}{px} \PY{o}{=} \PY{n}{dist}\PY{o}{.}\PY{n}{log\PYZus{}prob}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+                     \PY{n}{loss\PYZus{}seq} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{px}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss\PYZus{}seq} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{loss\PYZus{}seq}\PY{p}{)}
+         
+                 \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{name\PYZus{}scope}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{scope}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} Use learning rte decay}
+                     \PY{n}{global\PYZus{}step} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{trainable}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+                     \PY{n}{lr} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{exponential\PYZus{}decay}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{p}{,} \PY{n}{global\PYZus{}step}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{staircase}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss\PYZus{}seq} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss\PYZus{}lat\PYZus{}batch}
+         
+                     \PY{c+c1}{\PYZsh{} Route the gradients so that we can plot them on Tensorboard}
+                     \PY{n}{tvars} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{trainable\PYZus{}variables}\PY{p}{(}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{} We clip the gradients to prevent explosion}
+                     \PY{n}{grads} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{gradients}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss}\PY{p}{,} \PY{n}{tvars}\PY{p}{)}
+                     \PY{n}{grads}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{clip\PYZus{}by\PYZus{}global\PYZus{}norm}\PY{p}{(}\PY{n}{grads}\PY{p}{,} \PY{n}{max\PYZus{}grad\PYZus{}norm}\PY{p}{)}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{numel} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{constant}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         
+                     \PY{c+c1}{\PYZsh{} And apply the gradients}
+                     \PY{n}{optimizer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{AdamOptimizer}\PY{p}{(}\PY{n}{lr}\PY{p}{)}
+                     \PY{n}{gradients} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{grads}\PY{p}{,} \PY{n}{tvars}\PY{p}{)}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train\PYZus{}step} \PY{o}{=} \PY{n}{optimizer}\PY{o}{.}\PY{n}{apply\PYZus{}gradients}\PY{p}{(}\PY{n}{gradients}\PY{p}{,} \PY{n}{global\PYZus{}step}\PY{o}{=}\PY{n}{global\PYZus{}step}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}      for gradient, variable in gradients:  \PYZsh{}plot the gradient of each trainable variable}
+                     \PY{c+c1}{\PYZsh{}        if isinstance(gradient, ops.IndexedSlices):}
+                     \PY{c+c1}{\PYZsh{}          grad\PYZus{}values = gradient.values}
+                     \PY{c+c1}{\PYZsh{}        else:}
+                     \PY{c+c1}{\PYZsh{}          grad\PYZus{}values = gradient}
+                     \PY{c+c1}{\PYZsh{}}
+                     \PY{c+c1}{\PYZsh{}        self.numel +=tf.reduce\PYZus{}sum(tf.size(variable))}
+                     \PY{c+c1}{\PYZsh{}        tf.summary.histogram(variable.name, variable)}
+                     \PY{c+c1}{\PYZsh{}        tf.summary.histogram(variable.name + \PYZdq{}/gradients\PYZdq{}, grad\PYZus{}values)}
+                     \PY{c+c1}{\PYZsh{}        tf.summary.histogram(variable.name + \PYZdq{}/gradient\PYZus{}norm\PYZdq{}, clip\PYZus{}ops.global\PYZus{}norm([grad\PYZus{}values]))}
+         
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{numel} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{constant}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{tf}\PY{o}{.}\PY{n}{summary}\PY{o}{.}\PY{n}{tensor\PYZus{}summary}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat\PYZus{}state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{z\PYZus{}mu}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Define one op to call all summaries}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{merged} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{summary}\PY{o}{.}\PY{n}{merge\PYZus{}all}\PY{p}{(}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} and one op to initialize the variables}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{init\PYZus{}op} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{global\PYZus{}variables\PYZus{}initializer}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{AE\_ts\_main}\label{ae_ts_main}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Read data}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{stats}
+         \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{os}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{c+c1}{\PYZsh{} Import all labeled files}
+         \PY{n}{path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{expanduser}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZti{}/Dropbox/data/labeledData/}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{fileInList} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{path}\PY{o}{+}\PY{n}{f}\PY{p}{)} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{n}{path}\PY{p}{)}\PY{p}{)}
+         \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{f}\PY{p}{)} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{fileInList}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Import individual labeled files}
+         \PY{c+c1}{\PYZsh{} data = pd.read\PYZus{}csv(\PYZsq{}./data/processedData/10\PYZhy{}07\PYZhy{}20\PYZhy{}08.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{} data = pd.read\PYZus{}csv(\PYZsq{}./data/processedData/12\PYZhy{}07\PYZhy{}18\PYZhy{}08.csv\PYZsq{})}
+         \PY{c+c1}{\PYZsh{} data = pd.concat([data1, data2])}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Activity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+105494
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}45}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f2d470644a8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{c+c1}{\PYZsh{} Data preprocessing}
+         \PY{n}{featureNames} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{featureNames}\PY{o}{.}\PY{n}{remove}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Activity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{feature\PYZus{}normalize}\PY{p}{(}\PY{n}{dataset}\PY{p}{)}\PY{p}{:}
+             \PY{n}{mu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{dataset}\PY{p}{,}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{sigma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{dataset}\PY{p}{,}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
+             \PY{k}{return} \PY{p}{(}\PY{n}{dataset} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)}\PY{o}{/}\PY{n}{sigma}
+         
+         \PY{n}{data}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{how}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{any}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{inplace}\PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{featureNames}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{featureNames}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{timeStamp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{pass}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{data}\PY{p}{[}\PY{n}{featureNames}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{n}{feature\PYZus{}normalize}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{featureNames}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{)} 
+                 
+         \PY{k}{def} \PY{n+nf}{timeStampToFloat}\PY{p}{(}\PY{n}{stringTime}\PY{p}{)}\PY{p}{:}
+             \PY{n}{splitTime} \PY{o}{=} \PY{n}{stringTime}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{hour} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{splitTime}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{3600}
+             \PY{n}{minutes} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{splitTime}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{60}
+             \PY{k}{return} \PY{n}{hour} \PY{o}{+} \PY{n}{minutes} \PY{o}{+} \PY{n+nb}{float}\PY{p}{(}\PY{n}{splitTime}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{timeStamp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{timeStamp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{timeStampToFloat}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{c+c1}{\PYZsh{} Separate X and Y}
+         \PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{58}\PY{p}{]}
+         \PY{n}{Y} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Activity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{} print(Y.unique())}
+         \PY{c+c1}{\PYZsh{} Y.value\PYZus{}counts().plot(kind=\PYZsq{}bar\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/gvlablinux/anaconda3/envs/tfPython3/lib/python3.6/site-packages/ipykernel/\_\_main\_\_.py:1: FutureWarning: Method .as\_matrix will be removed in a future version. Use .values instead.
+  if \_\_name\_\_ == '\_\_main\_\_':
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{n}{Y} \PY{o}{=} \PY{n}{Y}\PY{o}{.}\PY{n}{map}\PY{p}{(} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Approaching}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Interacting}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Leaving}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Uninterested}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{\PYZcb{}} \PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{Y} \PY{o}{=} \PY{n}{Y}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/gvlablinux/anaconda3/envs/tfPython3/lib/python3.6/site-packages/ipykernel/\_\_main\_\_.py:1: FutureWarning: Method .as\_matrix will be removed in a future version. Use .values instead.
+  if \_\_name\_\_ == '\_\_main\_\_':
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cross\PYZus{}validation} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+         \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.35}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{c+c1}{\PYZsh{} \PYZhy{}*\PYZhy{} coding: utf\PYZhy{}8 \PYZhy{}*\PYZhy{}}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{Created on Tue Mar 22 10:43:29 2016}
+         \PY{l+s+sd}{@author: Rob Romijnders}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{os}
+         \PY{n}{os}\PY{o}{.}\PY{n}{environ}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TF\PYZus{}CPP\PYZus{}MIN\PYZus{}LOG\PYZus{}LEVEL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+         \PY{n}{tf}\PY{o}{.}\PY{n}{logging}\PY{o}{.}\PY{n}{set\PYZus{}verbosity}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{logging}\PY{o}{.}\PY{n}{ERROR}\PY{p}{)}
+         \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{contrib}\PY{n+nn}{.}\PY{n+nn}{tensorboard}\PY{n+nn}{.}\PY{n+nn}{plugins} \PY{k}{import} \PY{n}{projector}
+         \PY{c+c1}{\PYZsh{} from AE\PYZus{}ts\PYZus{}model import Model, open\PYZus{}data, plot\PYZus{}data, plot\PYZus{}z\PYZus{}run}
+         
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Hyperparameters\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{c+c1}{\PYZsh{} direc = \PYZsq{}/home/rob/Dropbox/ml\PYZus{}projects/LSTM/UCR\PYZus{}TS\PYZus{}Archive\PYZus{}2015\PYZsq{}}
+         \PY{n}{LOG\PYZus{}DIR} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/home/gvlablinux/autoEncoder/.summaries}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{config} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}  \PY{c+c1}{\PYZsh{} Put all configuration information into the dict}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}layers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{2}  \PY{c+c1}{\PYZsh{} number of layers of stacked RNN\PYZsq{}s}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hidden\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{90}  \PY{c+c1}{\PYZsh{} memory cells in a layer}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}grad\PYZus{}norm}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{5}  \PY{c+c1}{\PYZsh{} maximum gradient norm during training}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{64}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{learning\PYZus{}rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{005}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{crd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}  \PY{c+c1}{\PYZsh{} Hyperparameter for future generalization}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{20}  \PY{c+c1}{\PYZsh{} number of units in the latent space}
+         
+         \PY{n}{plot\PYZus{}every} \PY{o}{=} \PY{l+m+mi}{100}  \PY{c+c1}{\PYZsh{} after \PYZus{}plot\PYZus{}every\PYZus{} GD steps, there\PYZsq{}s console output}
+         \PY{n}{max\PYZus{}iterations} \PY{o}{=} \PY{l+m+mi}{1000}  \PY{c+c1}{\PYZsh{} maximum number of iterations}
+         \PY{n}{dropout} \PY{o}{=} \PY{l+m+mf}{0.8}  \PY{c+c1}{\PYZsh{} Dropout rate}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Load the data\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{c+c1}{\PYZsh{} X\PYZus{}train, X\PYZus{}val, y\PYZus{}train, y\PYZus{}val = open\PYZus{}data(\PYZsq{}/home/rob/Dropbox/ml\PYZus{}projects/LSTM/UCR\PYZus{}TS\PYZus{}Archive\PYZus{}2015\PYZsq{})}
+         
+         \PY{n}{N} \PY{o}{=} \PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{Nval} \PY{o}{=} \PY{n}{X\PYZus{}val}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{D} \PY{o}{=} \PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{config}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sl}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{sl} \PY{o}{=} \PY{n}{D}  \PY{c+c1}{\PYZsh{} sequence length}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{We have }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ observations with }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ dimensions}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{N}\PY{p}{,} \PY{n}{D}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Organize the classes}
+         \PY{n}{num\PYZus{}classes} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} base = np.min(y\PYZus{}train)  \PYZsh{} Check if data is 0\PYZhy{}based}
+         \PY{c+c1}{\PYZsh{} if base != 0:}
+         \PY{c+c1}{\PYZsh{}     y\PYZus{}train \PYZhy{}= base}
+         \PY{c+c1}{\PYZsh{}     y\PYZus{}val \PYZhy{}= base}
+         
+         \PY{c+c1}{\PYZsh{} Plot data   \PYZsh{} and save high quality plt.savefig(\PYZsq{}data\PYZus{}examples.eps\PYZsq{}, format=\PYZsq{}eps\PYZsq{}, dpi=1000)}
+         \PY{c+c1}{\PYZsh{} plot\PYZus{}data(X\PYZus{}train, y\PYZus{}train)}
+         
+         \PY{c+c1}{\PYZsh{} Proclaim the epochs}
+         \PY{c+c1}{\PYZsh{} epochs = np.floor(batch\PYZus{}size * max\PYZus{}iterations / N)}
+         \PY{n}{epochs} \PY{o}{=} \PY{l+m+mi}{10}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Train with approximately }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{ epochs}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{epochs}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+We have 68571 observations with 58 dimensions
+Train with approximately 10 epochs
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Training time!\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{n}{tf}\PY{o}{.}\PY{n}{reset\PYZus{}default\PYZus{}graph}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model} \PY{o}{=} \PY{n}{Model}\PY{p}{(}\PY{n}{config}\PY{p}{)}
+         
+         \PY{n}{sess} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)}
+         \PY{n}{perf\PYZus{}collect} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{floor}\PY{p}{(}\PY{n}{max\PYZus{}iterations} \PY{o}{/} \PY{n}{plot\PYZus{}every}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{k}{if} \PY{k+kc}{True}\PY{p}{:}
+             \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{init\PYZus{}op}\PY{p}{)}
+             \PY{n}{writer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{summary}\PY{o}{.}\PY{n}{FileWriter}\PY{p}{(}\PY{n}{LOG\PYZus{}DIR}\PY{p}{,} \PY{n}{sess}\PY{o}{.}\PY{n}{graph}\PY{p}{)}  \PY{c+c1}{\PYZsh{} writer for Tensorboard}
+         
+             \PY{n}{step} \PY{o}{=} \PY{l+m+mi}{0}  \PY{c+c1}{\PYZsh{} Step is a counter for filling the numpy array perf\PYZus{}collect}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{max\PYZus{}iterations}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{batch\PYZus{}ind} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{N}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+                 \PY{n}{result} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{model}\PY{o}{.}\PY{n}{loss}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{loss\PYZus{}seq}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{loss\PYZus{}lat\PYZus{}batch}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{train\PYZus{}step}\PY{p}{]}\PY{p}{,}
+                                   \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{model}\PY{o}{.}\PY{n}{x}\PY{p}{:} \PY{n}{X\PYZus{}train}\PY{p}{[}\PY{n}{batch\PYZus{}ind}\PY{p}{]}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{keep\PYZus{}prob}\PY{p}{:} \PY{n}{dropout}\PY{p}{\PYZcb{}}\PY{p}{)}
+         
+                 \PY{k}{if} \PY{n}{i} \PY{o}{\PYZpc{}} \PY{n}{plot\PYZus{}every} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} Save train performances}
+                     \PY{n}{perf\PYZus{}collect}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{step}\PY{p}{]} \PY{o}{=} \PY{n}{loss\PYZus{}train} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                     \PY{n}{loss\PYZus{}train\PYZus{}seq}\PY{p}{,} \PY{n}{lost\PYZus{}train\PYZus{}lat} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+         
+                     \PY{c+c1}{\PYZsh{} Calculate and save validation performance}
+                     \PY{n}{batch\PYZus{}ind\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{Nval}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+                     \PY{n}{result} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{model}\PY{o}{.}\PY{n}{loss}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{loss\PYZus{}seq}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{loss\PYZus{}lat\PYZus{}batch}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{merged}\PY{p}{]}\PY{p}{,}
+                                       \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{model}\PY{o}{.}\PY{n}{x}\PY{p}{:} \PY{n}{X\PYZus{}val}\PY{p}{[}\PY{n}{batch\PYZus{}ind\PYZus{}val}\PY{p}{]}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{keep\PYZus{}prob}\PY{p}{:} \PY{l+m+mf}{1.0}\PY{p}{\PYZcb{}}\PY{p}{)}
+                     \PY{n}{perf\PYZus{}collect}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{step}\PY{p}{]} \PY{o}{=} \PY{n}{loss\PYZus{}val} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                     \PY{n}{loss\PYZus{}val\PYZus{}seq}\PY{p}{,} \PY{n}{lost\PYZus{}val\PYZus{}lat} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+                     \PY{c+c1}{\PYZsh{} and save to Tensorboard}
+                     \PY{n}{summary\PYZus{}str} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+                     \PY{n}{writer}\PY{o}{.}\PY{n}{add\PYZus{}summary}\PY{p}{(}\PY{n}{summary\PYZus{}str}\PY{p}{,} \PY{n}{i}\PY{p}{)}
+                     \PY{n}{writer}\PY{o}{.}\PY{n}{flush}\PY{p}{(}\PY{p}{)}
+         
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{At }\PY{l+s+si}{\PYZpc{}6s}\PY{l+s+s2}{ / }\PY{l+s+si}{\PYZpc{}6s}\PY{l+s+s2}{ train (}\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s2}{, }\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s2}{, }\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s2}{), val (}\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s2}{, }\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s2}{,}\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s2}{) in order (total, seq, lat)}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                     \PY{n}{i}\PY{p}{,} \PY{n}{max\PYZus{}iterations}\PY{p}{,} \PY{n}{loss\PYZus{}train}\PY{p}{,} \PY{n}{loss\PYZus{}train\PYZus{}seq}\PY{p}{,} \PY{n}{lost\PYZus{}train\PYZus{}lat}\PY{p}{,} \PY{n}{loss\PYZus{}val}\PY{p}{,} \PY{n}{loss\PYZus{}val\PYZus{}seq}\PY{p}{,} \PY{n}{lost\PYZus{}val\PYZus{}lat}\PY{p}{)}\PY{p}{)}
+                     \PY{n}{step} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+         \PY{k}{if} \PY{k+kc}{False}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}\PYZsh{}Extract the latent space coordinates of the validation set}
+             \PY{n}{start} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{label} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} The label to save to visualize the latent space}
+             \PY{n}{z\PYZus{}run} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+             \PY{k}{while} \PY{n}{start} \PY{o}{+} \PY{n}{batch\PYZus{}size} \PY{o}{\PYZlt{}} \PY{n}{Nval}\PY{p}{:}
+                 \PY{n}{run\PYZus{}ind} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{n}{start}\PY{p}{,} \PY{n}{start} \PY{o}{+} \PY{n}{batch\PYZus{}size}\PY{p}{)}
+                 \PY{n}{z\PYZus{}mu\PYZus{}fetch} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{z\PYZus{}mu}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{model}\PY{o}{.}\PY{n}{x}\PY{p}{:} \PY{n}{X\PYZus{}val}\PY{p}{[}\PY{n}{run\PYZus{}ind}\PY{p}{]}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{keep\PYZus{}prob}\PY{p}{:} \PY{l+m+mf}{1.0}\PY{p}{\PYZcb{}}\PY{p}{)}
+                 \PY{n}{z\PYZus{}run}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{z\PYZus{}mu\PYZus{}fetch}\PY{p}{)}
+                 \PY{n}{start} \PY{o}{+}\PY{o}{=} \PY{n}{batch\PYZus{}size}
+         
+             \PY{n}{z\PYZus{}run} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{label} \PY{o}{=} \PY{n}{y\PYZus{}val}\PY{p}{[}\PY{p}{:}\PY{n}{start}\PY{p}{]}
+         
+             \PY{n}{plot\PYZus{}z\PYZus{}run}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{,} \PY{n}{label}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Save the projections also to Tensorboard}
+         \PY{n}{saver} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{Saver}\PY{p}{(}\PY{p}{)}
+         \PY{n}{saver}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{sess}\PY{p}{,} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{LOG\PYZus{}DIR}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{model.ckpt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{step}\PY{p}{)}
+         \PY{n}{config} \PY{o}{=} \PY{n}{projector}\PY{o}{.}\PY{n}{ProjectorConfig}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} You can add multiple embeddings. Here we add only one.}
+         \PY{n}{embedding} \PY{o}{=} \PY{n}{config}\PY{o}{.}\PY{n}{embeddings}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{)}
+         \PY{n}{embedding}\PY{o}{.}\PY{n}{tensor\PYZus{}name} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{z\PYZus{}mu}\PY{o}{.}\PY{n}{name}
+         \PY{c+c1}{\PYZsh{} Link this tensor to its metadata file (e.g. labels).}
+         \PY{n}{embedding}\PY{o}{.}\PY{n}{metadata\PYZus{}path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{LOG\PYZus{}DIR}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{metadata.tsv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Saves a configuration file that TensorBoard will read during startup.}
+         \PY{n}{projector}\PY{o}{.}\PY{n}{visualize\PYZus{}embeddings}\PY{p}{(}\PY{n}{writer}\PY{p}{,} \PY{n}{config}\PY{p}{)}
+         \PY{n}{saver}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{sess}\PY{p}{,} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{LOG\PYZus{}DIR}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{model.ckpt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{step} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{writer}\PY{o}{.}\PY{n}{flush}\PY{p}{(}\PY{p}{)}
+         
+         
+         
+         \PY{c+c1}{\PYZsh{} Now open Tensorboard with}
+         \PY{c+c1}{\PYZsh{}  \PYZdl{}tensorboard \PYZhy{}\PYZhy{}logdir = LOG\PYZus{}DIR}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+At      0 /   1000 train (20097358.000, 20097356.000, 1.889), val (12707016.000, 12707014.000,1.774) in order (total, seq, lat)
+At    100 /   1000 train (4.977, 4.964, 0.013), val (4.952, 4.951,0.001) in order (total, seq, lat)
+At    200 /   1000 train (2.242, 2.238, 0.004), val (2.212, 2.211,0.001) in order (total, seq, lat)
+At    300 /   1000 train (29.560, 29.556, 0.004), val (1.936, 1.935,0.001) in order (total, seq, lat)
+At    400 /   1000 train (2.390, 2.386, 0.004), val (1.972, 1.971,0.000) in order (total, seq, lat)
+At    500 /   1000 train (1.642, 1.638, 0.004), val (1.850, 1.849,0.001) in order (total, seq, lat)
+At    600 /   1000 train (1.781, 1.776, 0.004), val (1.941, 1.940,0.002) in order (total, seq, lat)
+At    700 /   1000 train (1.888, 1.885, 0.003), val (1.696, 1.695,0.001) in order (total, seq, lat)
+At    800 /   1000 train (1.863, 1.859, 0.004), val (1.813, 1.812,0.002) in order (total, seq, lat)
+At    900 /   1000 train (1.922, 1.918, 0.004), val (1.657, 1.656,0.001) in order (total, seq, lat)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{start} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{label} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} The label to save to visualize the latent space}
+         \PY{n}{z\PYZus{}run} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{while} \PY{n}{start} \PY{o}{+} \PY{n}{batch\PYZus{}size} \PY{o}{\PYZlt{}} \PY{n}{Nval}\PY{p}{:}
+             \PY{n}{run\PYZus{}ind} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{n}{start}\PY{p}{,} \PY{n}{start} \PY{o}{+} \PY{n}{batch\PYZus{}size}\PY{p}{)}
+             \PY{n}{z\PYZus{}mu\PYZus{}fetch} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{z\PYZus{}mu}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{model}\PY{o}{.}\PY{n}{x}\PY{p}{:} \PY{n}{X\PYZus{}val}\PY{p}{[}\PY{n}{run\PYZus{}ind}\PY{p}{]}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{keep\PYZus{}prob}\PY{p}{:} \PY{l+m+mf}{1.0}\PY{p}{\PYZcb{}}\PY{p}{)}
+             \PY{n}{z\PYZus{}run}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{z\PYZus{}mu\PYZus{}fetch}\PY{p}{)}
+             \PY{n}{start} \PY{o}{+}\PY{o}{=} \PY{n}{batch\PYZus{}size}
+         
+         \PY{n}{z\PYZus{}run} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{label} \PY{o}{=} \PY{n}{y\PYZus{}val}\PY{p}{[}\PY{p}{:}\PY{n}{start}\PY{p}{]}
+         
+         \PY{n}{plot\PYZus{}z\PYZus{}run}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{,} \PY{n}{label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No handles with labels found to put in legend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[t-SNE] Computing 241 nearest neighbors{\ldots}
+[t-SNE] Indexed 36864 samples in 0.044s{\ldots}
+[t-SNE] Computed neighbors for 36864 samples in 3.081s{\ldots}
+[t-SNE] Computed conditional probabilities for sample 1000 / 36864
+[t-SNE] Computed conditional probabilities for sample 2000 / 36864
+[t-SNE] Computed conditional probabilities for sample 3000 / 36864
+[t-SNE] Computed conditional probabilities for sample 4000 / 36864
+[t-SNE] Computed conditional probabilities for sample 5000 / 36864
+[t-SNE] Computed conditional probabilities for sample 6000 / 36864
+[t-SNE] Computed conditional probabilities for sample 7000 / 36864
+[t-SNE] Computed conditional probabilities for sample 8000 / 36864
+[t-SNE] Computed conditional probabilities for sample 9000 / 36864
+[t-SNE] Computed conditional probabilities for sample 10000 / 36864
+[t-SNE] Computed conditional probabilities for sample 11000 / 36864
+[t-SNE] Computed conditional probabilities for sample 12000 / 36864
+[t-SNE] Computed conditional probabilities for sample 13000 / 36864
+[t-SNE] Computed conditional probabilities for sample 14000 / 36864
+[t-SNE] Computed conditional probabilities for sample 15000 / 36864
+[t-SNE] Computed conditional probabilities for sample 16000 / 36864
+[t-SNE] Computed conditional probabilities for sample 17000 / 36864
+[t-SNE] Computed conditional probabilities for sample 18000 / 36864
+[t-SNE] Computed conditional probabilities for sample 19000 / 36864
+[t-SNE] Computed conditional probabilities for sample 20000 / 36864
+[t-SNE] Computed conditional probabilities for sample 21000 / 36864
+[t-SNE] Computed conditional probabilities for sample 22000 / 36864
+[t-SNE] Computed conditional probabilities for sample 23000 / 36864
+[t-SNE] Computed conditional probabilities for sample 24000 / 36864
+[t-SNE] Computed conditional probabilities for sample 25000 / 36864
+[t-SNE] Computed conditional probabilities for sample 26000 / 36864
+[t-SNE] Computed conditional probabilities for sample 27000 / 36864
+[t-SNE] Computed conditional probabilities for sample 28000 / 36864
+[t-SNE] Computed conditional probabilities for sample 29000 / 36864
+[t-SNE] Computed conditional probabilities for sample 30000 / 36864
+[t-SNE] Computed conditional probabilities for sample 31000 / 36864
+[t-SNE] Computed conditional probabilities for sample 32000 / 36864
+[t-SNE] Computed conditional probabilities for sample 33000 / 36864
+[t-SNE] Computed conditional probabilities for sample 34000 / 36864
+[t-SNE] Computed conditional probabilities for sample 35000 / 36864
+[t-SNE] Computed conditional probabilities for sample 36000 / 36864
+[t-SNE] Computed conditional probabilities for sample 36864 / 36864
+[t-SNE] Mean sigma: 0.000674
+[t-SNE] Computed conditional probabilities in 6.619s
+[t-SNE] Iteration 50: error = 100.1181488, gradient norm = 0.0000317 (50 iterations in 54.181s)
+[t-SNE] Iteration 100: error = 80.5942383, gradient norm = 0.0021768 (50 iterations in 53.527s)
+[t-SNE] Iteration 150: error = 73.3758698, gradient norm = 0.0013954 (50 iterations in 52.301s)
+[t-SNE] Iteration 200: error = 69.8772812, gradient norm = 0.0010895 (50 iterations in 51.847s)
+[t-SNE] Iteration 250: error = 67.6017151, gradient norm = 0.0008732 (50 iterations in 52.066s)
+[t-SNE] KL divergence after 250 iterations with early exaggeration: 67.601715
+[t-SNE] Iteration 300: error = 2.8637927, gradient norm = 0.0010338 (50 iterations in 52.529s)
+[t-SNE] Iteration 350: error = 2.3673820, gradient norm = 0.0006783 (50 iterations in 52.648s)
+[t-SNE] Iteration 400: error = 1.9826388, gradient norm = 0.0004654 (50 iterations in 52.984s)
+[t-SNE] Iteration 450: error = 1.7044833, gradient norm = 0.0003406 (50 iterations in 51.757s)
+[t-SNE] Iteration 500: error = 1.5015333, gradient norm = 0.0002613 (50 iterations in 51.816s)
+[t-SNE] Iteration 550: error = 1.3486340, gradient norm = 0.0002085 (50 iterations in 51.919s)
+[t-SNE] Iteration 600: error = 1.2300128, gradient norm = 0.0001708 (50 iterations in 52.043s)
+[t-SNE] Iteration 650: error = 1.1357417, gradient norm = 0.0001432 (50 iterations in 51.977s)
+[t-SNE] Iteration 700: error = 1.0593506, gradient norm = 0.0001219 (50 iterations in 52.014s)
+[t-SNE] Iteration 750: error = 0.9963824, gradient norm = 0.0001052 (50 iterations in 52.107s)
+[t-SNE] Iteration 800: error = 0.9435684, gradient norm = 0.0000919 (50 iterations in 52.018s)
+[t-SNE] Iteration 850: error = 0.8988922, gradient norm = 0.0000816 (50 iterations in 51.850s)
+[t-SNE] Iteration 900: error = 0.8602746, gradient norm = 0.0000727 (50 iterations in 51.967s)
+[t-SNE] Iteration 950: error = 0.8271152, gradient norm = 0.0000654 (50 iterations in 51.894s)
+[t-SNE] Iteration 1000: error = 0.7982501, gradient norm = 0.0000593 (50 iterations in 52.175s)
+[t-SNE] Iteration 1050: error = 0.7728232, gradient norm = 0.0000541 (50 iterations in 51.760s)
+[t-SNE] Iteration 1100: error = 0.7503602, gradient norm = 0.0000493 (50 iterations in 51.967s)
+[t-SNE] Iteration 1150: error = 0.7305675, gradient norm = 0.0000454 (50 iterations in 52.170s)
+[t-SNE] Iteration 1200: error = 0.7129188, gradient norm = 0.0000420 (50 iterations in 52.108s)
+[t-SNE] Iteration 1250: error = 0.6970733, gradient norm = 0.0000391 (50 iterations in 51.870s)
+[t-SNE] Iteration 1300: error = 0.6827765, gradient norm = 0.0000368 (50 iterations in 52.038s)
+[t-SNE] Iteration 1350: error = 0.6699336, gradient norm = 0.0000347 (50 iterations in 51.953s)
+[t-SNE] Iteration 1400: error = 0.6584361, gradient norm = 0.0000335 (50 iterations in 52.002s)
+[t-SNE] Iteration 1450: error = 0.6481034, gradient norm = 0.0000319 (50 iterations in 52.106s)
+[t-SNE] Iteration 1500: error = 0.6387843, gradient norm = 0.0000308 (50 iterations in 51.939s)
+[t-SNE] Iteration 1550: error = 0.6303816, gradient norm = 0.0000294 (50 iterations in 51.862s)
+[t-SNE] Iteration 1600: error = 0.6228110, gradient norm = 0.0000291 (50 iterations in 52.166s)
+[t-SNE] Iteration 1650: error = 0.6161218, gradient norm = 0.0000289 (50 iterations in 52.170s)
+[t-SNE] Iteration 1700: error = 0.6104088, gradient norm = 0.0000292 (50 iterations in 51.977s)
+[t-SNE] Iteration 1750: error = 0.6056288, gradient norm = 0.0000286 (50 iterations in 51.741s)
+[t-SNE] Iteration 1800: error = 0.6015162, gradient norm = 0.0000285 (50 iterations in 51.754s)
+[t-SNE] Iteration 1850: error = 0.5980463, gradient norm = 0.0000282 (50 iterations in 52.074s)
+[t-SNE] Iteration 1900: error = 0.5952859, gradient norm = 0.0000280 (50 iterations in 51.968s)
+[t-SNE] Iteration 1950: error = 0.5929059, gradient norm = 0.0000279 (50 iterations in 51.855s)
+[t-SNE] Iteration 2000: error = 0.5908060, gradient norm = 0.0000269 (50 iterations in 52.130s)
+[t-SNE] Iteration 2050: error = 0.5890333, gradient norm = 0.0000277 (50 iterations in 51.897s)
+[t-SNE] Iteration 2100: error = 0.5874974, gradient norm = 0.0000279 (50 iterations in 51.903s)
+[t-SNE] Iteration 2150: error = 0.5861613, gradient norm = 0.0000262 (50 iterations in 51.948s)
+[t-SNE] Iteration 2200: error = 0.5847751, gradient norm = 0.0000261 (50 iterations in 51.908s)
+[t-SNE] Iteration 2250: error = 0.5835499, gradient norm = 0.0000252 (50 iterations in 51.963s)
+[t-SNE] Iteration 2300: error = 0.5823442, gradient norm = 0.0000244 (50 iterations in 51.847s)
+[t-SNE] Iteration 2350: error = 0.5811523, gradient norm = 0.0000237 (50 iterations in 51.815s)
+[t-SNE] Iteration 2400: error = 0.5798662, gradient norm = 0.0000235 (50 iterations in 52.142s)
+[t-SNE] Iteration 2450: error = 0.5785202, gradient norm = 0.0000237 (50 iterations in 52.086s)
+[t-SNE] Iteration 2500: error = 0.5772573, gradient norm = 0.0000232 (50 iterations in 52.471s)
+[t-SNE] Iteration 2550: error = 0.5758370, gradient norm = 0.0000232 (50 iterations in 52.062s)
+[t-SNE] Iteration 2600: error = 0.5745659, gradient norm = 0.0000223 (50 iterations in 51.914s)
+[t-SNE] Iteration 2650: error = 0.5732759, gradient norm = 0.0000222 (50 iterations in 51.731s)
+[t-SNE] Iteration 2700: error = 0.5719787, gradient norm = 0.0000220 (50 iterations in 51.768s)
+[t-SNE] Iteration 2750: error = 0.5706634, gradient norm = 0.0000224 (50 iterations in 52.327s)
+[t-SNE] Iteration 2800: error = 0.5693668, gradient norm = 0.0000228 (50 iterations in 52.287s)
+[t-SNE] Iteration 2850: error = 0.5682038, gradient norm = 0.0000219 (50 iterations in 51.840s)
+[t-SNE] Iteration 2900: error = 0.5671211, gradient norm = 0.0000215 (50 iterations in 51.856s)
+[t-SNE] Iteration 2950: error = 0.5660994, gradient norm = 0.0000213 (50 iterations in 52.479s)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No handles with labels found to put in legend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[t-SNE] Iteration 3000: error = 0.5650359, gradient norm = 0.0000204 (50 iterations in 52.781s)
+[t-SNE] Error after 3000 iterations: 0.565036
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n}{plot\PYZus{}z\PYZus{}run}\PY{p}{(}\PY{n}{z\PYZus{}run}\PY{p}{,} \PY{n}{label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No handles with labels found to put in legend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[t-SNE] Computing 241 nearest neighbors{\ldots}
+[t-SNE] Indexed 6848 samples in 0.006s{\ldots}
+[t-SNE] Computed neighbors for 6848 samples in 0.335s{\ldots}
+[t-SNE] Computed conditional probabilities for sample 1000 / 6848
+[t-SNE] Computed conditional probabilities for sample 2000 / 6848
+[t-SNE] Computed conditional probabilities for sample 3000 / 6848
+[t-SNE] Computed conditional probabilities for sample 4000 / 6848
+[t-SNE] Computed conditional probabilities for sample 5000 / 6848
+[t-SNE] Computed conditional probabilities for sample 6000 / 6848
+[t-SNE] Computed conditional probabilities for sample 6848 / 6848
+[t-SNE] Mean sigma: 0.011600
+[t-SNE] Computed conditional probabilities in 0.999s
+[t-SNE] Iteration 50: error = 71.7721710, gradient norm = 0.0305266 (50 iterations in 8.856s)
+[t-SNE] Iteration 100: error = 58.2559547, gradient norm = 0.0057822 (50 iterations in 8.079s)
+[t-SNE] Iteration 150: error = 55.3278809, gradient norm = 0.0032971 (50 iterations in 7.966s)
+[t-SNE] Iteration 200: error = 53.9640007, gradient norm = 0.0023981 (50 iterations in 7.879s)
+[t-SNE] Iteration 250: error = 53.1562805, gradient norm = 0.0018242 (50 iterations in 7.986s)
+[t-SNE] KL divergence after 250 iterations with early exaggeration: 53.156281
+[t-SNE] Iteration 300: error = 1.0577666, gradient norm = 0.0011965 (50 iterations in 8.121s)
+[t-SNE] Iteration 350: error = 0.6643034, gradient norm = 0.0004798 (50 iterations in 8.030s)
+[t-SNE] Iteration 400: error = 0.5104607, gradient norm = 0.0002615 (50 iterations in 8.016s)
+[t-SNE] Iteration 450: error = 0.4351465, gradient norm = 0.0001672 (50 iterations in 7.991s)
+[t-SNE] Iteration 500: error = 0.3921694, gradient norm = 0.0001229 (50 iterations in 8.006s)
+[t-SNE] Iteration 550: error = 0.3649020, gradient norm = 0.0000970 (50 iterations in 7.979s)
+[t-SNE] Iteration 600: error = 0.3467586, gradient norm = 0.0000899 (50 iterations in 7.984s)
+[t-SNE] Iteration 650: error = 0.3360919, gradient norm = 0.0000800 (50 iterations in 8.069s)
+[t-SNE] Iteration 700: error = 0.3293931, gradient norm = 0.0000744 (50 iterations in 8.001s)
+[t-SNE] Iteration 750: error = 0.3247556, gradient norm = 0.0000699 (50 iterations in 8.018s)
+[t-SNE] Iteration 800: error = 0.3216968, gradient norm = 0.0000658 (50 iterations in 8.027s)
+[t-SNE] Iteration 850: error = 0.3191600, gradient norm = 0.0000591 (50 iterations in 8.078s)
+[t-SNE] Iteration 900: error = 0.3166589, gradient norm = 0.0000547 (50 iterations in 8.071s)
+[t-SNE] Iteration 950: error = 0.3142644, gradient norm = 0.0000523 (50 iterations in 8.042s)
+[t-SNE] Iteration 1000: error = 0.3119063, gradient norm = 0.0000504 (50 iterations in 8.125s)
+[t-SNE] Iteration 1050: error = 0.3099533, gradient norm = 0.0000470 (50 iterations in 8.025s)
+[t-SNE] Iteration 1100: error = 0.3082423, gradient norm = 0.0000479 (50 iterations in 8.127s)
+[t-SNE] Iteration 1150: error = 0.3068933, gradient norm = 0.0000512 (50 iterations in 8.060s)
+[t-SNE] Iteration 1200: error = 0.3061086, gradient norm = 0.0000531 (50 iterations in 8.155s)
+[t-SNE] Iteration 1250: error = 0.3049683, gradient norm = 0.0000461 (50 iterations in 8.052s)
+[t-SNE] Iteration 1300: error = 0.3041386, gradient norm = 0.0000484 (50 iterations in 8.037s)
+[t-SNE] Iteration 1350: error = 0.3032767, gradient norm = 0.0000434 (50 iterations in 8.062s)
+[t-SNE] Iteration 1400: error = 0.3025235, gradient norm = 0.0000441 (50 iterations in 8.091s)
+[t-SNE] Iteration 1450: error = 0.3017823, gradient norm = 0.0000423 (50 iterations in 8.093s)
+[t-SNE] Iteration 1500: error = 0.3011197, gradient norm = 0.0000431 (50 iterations in 8.017s)
+[t-SNE] Iteration 1550: error = 0.3005604, gradient norm = 0.0000428 (50 iterations in 8.010s)
+[t-SNE] Iteration 1600: error = 0.2999961, gradient norm = 0.0000427 (50 iterations in 7.992s)
+[t-SNE] Iteration 1650: error = 0.2992485, gradient norm = 0.0000393 (50 iterations in 8.045s)
+[t-SNE] Iteration 1700: error = 0.2988544, gradient norm = 0.0000383 (50 iterations in 7.988s)
+[t-SNE] Iteration 1750: error = 0.2981789, gradient norm = 0.0000400 (50 iterations in 8.018s)
+[t-SNE] Iteration 1800: error = 0.2978532, gradient norm = 0.0000414 (50 iterations in 7.985s)
+[t-SNE] Iteration 1850: error = 0.2973561, gradient norm = 0.0000427 (50 iterations in 8.028s)
+[t-SNE] Iteration 1900: error = 0.2970299, gradient norm = 0.0000350 (50 iterations in 8.007s)
+[t-SNE] Iteration 1950: error = 0.2965466, gradient norm = 0.0000353 (50 iterations in 8.034s)
+[t-SNE] Iteration 2000: error = 0.2961008, gradient norm = 0.0000366 (50 iterations in 7.981s)
+[t-SNE] Iteration 2050: error = 0.2958304, gradient norm = 0.0000327 (50 iterations in 8.128s)
+[t-SNE] Iteration 2100: error = 0.2954913, gradient norm = 0.0000341 (50 iterations in 7.996s)
+[t-SNE] Iteration 2150: error = 0.2951177, gradient norm = 0.0000381 (50 iterations in 8.029s)
+[t-SNE] Iteration 2200: error = 0.2947027, gradient norm = 0.0000362 (50 iterations in 8.169s)
+[t-SNE] Iteration 2250: error = 0.2945158, gradient norm = 0.0000348 (50 iterations in 8.583s)
+[t-SNE] Iteration 2300: error = 0.2938832, gradient norm = 0.0000311 (50 iterations in 8.044s)
+[t-SNE] Iteration 2350: error = 0.2936699, gradient norm = 0.0000321 (50 iterations in 8.026s)
+[t-SNE] Iteration 2400: error = 0.2934711, gradient norm = 0.0000317 (50 iterations in 8.107s)
+[t-SNE] Iteration 2450: error = 0.2930613, gradient norm = 0.0000313 (50 iterations in 7.970s)
+[t-SNE] Iteration 2500: error = 0.2927190, gradient norm = 0.0000310 (50 iterations in 7.981s)
+[t-SNE] Iteration 2550: error = 0.2923661, gradient norm = 0.0000354 (50 iterations in 8.069s)
+[t-SNE] Iteration 2600: error = 0.2921316, gradient norm = 0.0000316 (50 iterations in 8.018s)
+[t-SNE] Iteration 2650: error = 0.2918091, gradient norm = 0.0000354 (50 iterations in 8.000s)
+[t-SNE] Iteration 2700: error = 0.2915953, gradient norm = 0.0000317 (50 iterations in 8.010s)
+[t-SNE] Iteration 2750: error = 0.2913972, gradient norm = 0.0000290 (50 iterations in 7.968s)
+[t-SNE] Iteration 2800: error = 0.2911671, gradient norm = 0.0000296 (50 iterations in 7.986s)
+[t-SNE] Iteration 2850: error = 0.2908165, gradient norm = 0.0000308 (50 iterations in 7.984s)
+[t-SNE] Iteration 2900: error = 0.2904901, gradient norm = 0.0000334 (50 iterations in 8.060s)
+[t-SNE] Iteration 2950: error = 0.2902277, gradient norm = 0.0000304 (50 iterations in 7.999s)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No handles with labels found to put in legend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[t-SNE] Iteration 3000: error = 0.2902778, gradient norm = 0.0000357 (50 iterations in 7.983s)
+[t-SNE] Error after 3000 iterations: 0.290278
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
