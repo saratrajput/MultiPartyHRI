@@ -26,7 +26,6 @@ ipykernel==4.8.2
 ipython==5.7.0
 ipython-genutils==0.2.0
 itsdangerous==0.24
-Jinja2==2.10
 jupyter-client==5.2.3
 jupyter-core==4.4.0
 Keras==2.1.5
@@ -55,10 +54,8 @@ pyparsing==2.2.0
 PySocks==1.6.8
 python-dateutil==2.7.2
 pytz==2018.4
-PyYAML==3.12
 pyzmq==17.0.0
 qibuild==3.11.18
-requests==2.18.4
 requests-oauthlib==1.0.0
 scandir==1.7
 scikit-learn==0.19.1
