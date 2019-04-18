@@ -15,7 +15,7 @@ docutils==0.14
 dtw==1.3
 face-recognition==1.2.2
 face-recognition-models==0.3.0
-Flask==0.12.2
+flask>=0.12.3
 gast==0.2.0
 gevent==1.2.2
 greenlet==0.4.13
@@ -29,7 +29,7 @@ ipython==6.4.0
 ipython-genutils==0.2.0
 itsdangerous==0.24
 jedi==0.12.0
-Jinja2==2.10
+Jinja2>=2.10.1
 jupyter-client==5.2.3
 jupyter-core==4.4.0
 Keras==2.1.5
@@ -54,9 +54,9 @@ Pygments==2.2.0
 pyparsing==2.2.0
 python-dateutil==2.7.2
 pytz==2018.3
-PyYAML==3.12
+pyyaml>=4.2b1
 pyzmq==17.0.0
-requests==2.18.4
+requests>=2.20.0
 scikit-learn==0.19.1
 scipy==1.0.0
 seaborn==0.9.0
@@ -75,7 +75,7 @@ tinydb==3.8.1.post1
 tornado==5.0.2
 tqdm==4.23.0
 traitlets==4.3.2
-urllib3==1.22
+urllib3>=1.23
 wcwidth==0.1.7
 Werkzeug==0.14.1
 zmq==0.0.0
