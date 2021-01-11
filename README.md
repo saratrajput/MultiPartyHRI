@@ -1,5 +1,7 @@
 # Personalized Human Robot Interaction
 
+[Link to Paper](https://ieeexplore.ieee.org/abstract/document/8834226)
+
 The goal of the research was to build a Personlized Human Robot Interaction 
 system. We used time-series data from Kinect to build an Auto-encoder for 
 Human Activity Recognition. 
