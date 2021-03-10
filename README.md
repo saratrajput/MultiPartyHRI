@@ -18,6 +18,7 @@ hard-coded and it could learn from previous conversations.
 
 * Linux
 * Any Robot (We use Pepper)
+* [Node Primitives (NEP)](https://enriquecoronadozu.github.io/NEP/) 
 
 ## To Launch the Whole Setup
 
