@@ -39,7 +39,7 @@ MarkupSafe==1.0
 matplotlib==2.2.2
 nltk==3.4.5
 numpy==1.14.2
-opencv-python==3.4.1.15
+opencv-python==3.4.7.28
 packaging==17.1
 pandas==0.22.0
 pexpect==4.6.0
