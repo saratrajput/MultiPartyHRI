@@ -23,7 +23,7 @@ helper==2.4.2
 idna==2.6
 imagesize==1.0.0
 ipykernel==4.8.2
-ipython==5.7.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 itsdangerous==0.24
 jupyter-client==5.2.3
