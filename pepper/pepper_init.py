@@ -1,20 +1,22 @@
-from naoqi import ALProxy
 import os
+
+from naoqi import ALProxy
+
 # Declare robot ip and port
-robotIpPort = list()
+robot_ip_port = list()
 
 with open("/home/sp/multiPartyHRI/robotIpPort.txt", "r") as myRobotInfo:
     for line in myRobotInfo.readlines():
-        robotIpPort.append(line.strip())
+        robot_ip_port.append(line.strip())
 
-robotIp = robotIpPort[0]
-port = int(robotIpPort[1])
+robot_ip = robot_ip_port[0]
+port = int(robot_ip_port[1])
 
-behaviourProxy = ALProxy("ALBehaviorManager", robotIp, port)
-animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
-normalSpeechProxy = ALProxy("ALTextToSpeech", robotIp, port)
-autonomousLifeProxy = ALProxy("ALAutonomousLife", robotIp, port)
-motionProxy = ALProxy("ALMotion", robotIp, port)
+behaviour_proxy = ALProxy("ALBehaviorManager", robot_ip, port)
+animated_speech_proxy = ALProxy("ALAnimatedSpeech", robot_ip, port)
+normal_speech_proxy = ALProxy("ALTextToSpeech", robot_ip, port)
+autonomous_life_proxy = ALProxy("ALAutonomousLife", robot_ip, port)
+motion_proxy = ALProxy("ALMotion", robot_ip, port)
 
 # First stop all behaviours
 #behaviourProxy.stopAllBehaviors()

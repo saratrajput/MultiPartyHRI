@@ -8,70 +8,69 @@ problems with the speech recognition and chatbot. The decision blocks help
 to avoid repeating names by the number specified in the counters once the face
 has been recognized once.
 """
-#===================================NEP===================================
-import nep  
-import time 
-
-server = nep.server('127.0.0.1', 8011) #Create a new server instance
-#============================== Pepper ==============================
-from naoqi import ALProxy
 import os
+import time
 
+import logging
+import nep
+from naoqi import ALProxy
+
+
+server = nep.server("127.0.0.1", 8011)  # Create a new server instance
 # Get robot ip and port data from file
-robotIpPort = list()
+robot_ip_port = list()
 
 with open("/home/sp/multiPartyHRI/robotIpPort.txt", "r") as myRobotInfo:
     for line in myRobotInfo.readlines():
-        robotIpPort.append(line.strip())
+        robot_ip_port.append(line.strip())
 
-robotIp = robotIpPort[0]
-port = int(robotIpPort[1])
-#===================================Proxies===================================
-#animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
-normalSpeechProxy = ALProxy("ALTextToSpeech", robotIp, port)
+robot_ip = robot_ip_port[0]
+port = int(robot_ip_port[1])
+# ===================================Proxies===================================
+# animatedSpeechProxy = ALProxy("ALAnimatedSpeech", robotIp, port)
+normal_speech_proxy = ALProxy("ALTextToSpeech", robot_ip, port)
 
-normalSpeechProxy.setParameter("speed", 80)
-normalSpeechProxy.setParameter("pitchShift", 0.8)
-#===============================================================================
-names = ["Stranger"] * 2 # List to store names from face recognition output
+normal_speech_proxy.setParameter("speed", 80)
+normal_speech_proxy.setParameter("pitchShift", 0.8)
+# ===============================================================================
+names = ["Stranger"] * 2  # List to store names from face recognition output
 
-strangerCounter = 0 # Instantiate counter for when no face is recognized
-recNameCounter = 0 # Instantiate counter for first face recognized
-counterValue = 200
+stranger_counter = 0  # Instantiate counter for when no face is recognized
+rec_name_counter = 0  # Instantiate counter for first face recognized
+counter_value = 200
 
-recName = str() # Instantiate string to store first face recognized
+recName = str()  # Instantiate string to store first face recognized
 
 while True:
-    msg = {"message":"hello client"} # Message to send as response
-    request = server.listen_info() # Wait for client request
-#    request = raw_input("Give input:\n") # For debugging
+    msg = {"message": "hello client"}  # Message to send as response
+    request = server.listen_info()  # Wait for client request
+    #    request = raw_input("Give input:\n") # For debugging
 
     if names[1] != request:
         names[1] = request
         if names[1] == "Stranger":
-            if strangerCounter == 0:
-#                print "Hello", names[1], "What is your name?" # For debugging
-                normalSpeechProxy.say("Hey! %s. What is your name?" % names[1]) # Pepper's tts
-                strangerCounter = counterValue
-        elif recNameCounter == 0:
+            if stranger_counter == 0:
+                #                print "Hello", names[1], "What is your name?" # For debugging
+                normal_speech_proxy.say(
+                    "Hey! %s. What is your name?" % names[1]
+                )  # Pepper's tts
+                stranger_counter = counter_value
+        elif rec_name_counter == 0:
             recName = names[1]
             if names[1] == recName:
-#                print "Hello", names[1] # For debugging
-                normalSpeechProxy.say("Hey! %s." % names[1]) # Pepper's tts
-                recNameCounter = counterValue
+                #                print "Hello", names[1] # For debugging
+                normal_speech_proxy.say("Hey! %s." % names[1])  # Pepper's tts
+                rec_name_counter = counter_value
         elif names[1] != recName:
-#            print "Hello New", names[1] # For debugging
-            normalSpeechProxy.say("Hey! %s." % names[1]) # Pepper's tts
-    
-    if strangerCounter > 0:
-        strangerCounter = strangerCounter - 1
-    if recNameCounter > 0:
-        recNameCounter = recNameCounter -1
+            #            print "Hello New", names[1] # For debugging
+            normal_speech_proxy.say("Hey! %s." % names[1])  # Pepper's tts
 
-#    print "StrangerCounter:", strangerCounter # For debugging
-#    print "recName Counter:", recNameCounter # For debugging
+    if stranger_counter > 0:
+        stranger_counter = stranger_counter - 1
+    if rec_name_counter > 0:
+        rec_name_counter = rec_name_counter - 1
 
-    server.send_info(msg) # Send server response
-    
+    #    print "StrangerCounter:", strangerCounter # For debugging
+    #    print "recName Counter:", recNameCounter # For debugging
 
-
+    server.send_info(msg)  # Send server response
