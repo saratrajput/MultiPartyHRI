@@ -58,6 +58,10 @@ def main(args):
     # Set the topic and the configuration of the subscriber
     sub = node.new_sub("/" + node_name, conf)
 
+    data_dict = {
+        "kinect_human": {"ShoulderLeft": [], "ShoulderRight": [], "SpineBase": []}
+    }
+
     data = {}
     data_defined = False
 
